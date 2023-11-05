@@ -139,5 +139,3 @@ ggsave(filename = "pbmc3k_umap.jpg", height = 7, width = 12, plot = plot, qualit
 saveRDS(pbmc, file = "pbmc3k_final.rds")
 ```
 
-
-  

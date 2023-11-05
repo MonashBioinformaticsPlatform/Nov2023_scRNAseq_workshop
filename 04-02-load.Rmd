@@ -1,5 +1,3 @@
-# (PART) Seurat PBMC3k Tutorial {-} 
-
 # Load data {#load}
 
 

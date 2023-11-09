@@ -14,3 +14,6 @@ renv/
 renv.lock
 pbmc3k_umap.jpg
 aaaa/
+10k_PBMC_v3.1ChromiumX_Intronic.rds
+pbmc_tutorial.rds
+kang2018.rds

@@ -1,4 +1,3 @@
 
 
-https://swbioinf.github.io/scRNAseqInR_Doco/
-
+Pending to make landing page

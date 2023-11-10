@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 5 Structure | scRNAseq Analysis in R with Seurat</title>
 <meta name="description" content="Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section). We’ll load raw counts data, do some QC and setup various useful information in a Seurat object....">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Structure | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section). We’ll load raw counts data, do some QC and setup various useful information in a Seurat object....">
@@ -126,6 +126,7 @@ The ways to access the slots can be through methods for the class (functions) or
 <span><span class="co">#&gt; An object of class Seurat </span></span>
 <span><span class="co">#&gt; 13714 features across 2700 samples within 1 assay </span></span>
 <span><span class="co">#&gt; Active assay: RNA (13714 features, 2000 variable features)</span></span>
+<span><span class="co">#&gt;  3 layers present: counts, data, scale.data</span></span>
 <span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
 </div>
 <div id="whats-in-there" class="section level2" number="5.2">
@@ -176,6 +177,12 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <p>But the raw counts data is accessible too.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">pbmc_processed</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="co">#&gt; Warning: The `slot` argument of `GetAssayData()` is deprecated as of</span></span>
+<span><span class="co">#&gt; SeuratObject 5.0.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use the `layer` argument instead.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
+<span><span class="co">#&gt; this warning was generated.</span></span>
 <span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">#&gt;               AAACATACAACCAC-1 AAACATTGAGCTAC-1</span></span>
 <span><span class="co">#&gt; AL627309.1                   .                .</span></span>
@@ -193,38 +200,7 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <span><span class="co">#&gt; AGRN                         .                .</span></span>
 <span><span class="co">#&gt; C1orf159                     .                .</span></span>
 <span><span class="co">#&gt; TNFRSF18                     .                2</span></span></code></pre></div>
-<p>Seurat generally hides alot of this data complexity, and provides functions for typical tasks. Like plotting.</p>
-</div>
-<div id="plotting" class="section level2" number="5.3">
-<h2>
-<span class="header-section-number">5.3</span> Plotting<a class="anchor" aria-label="anchor" href="#plotting"><i class="fas fa-link"></i></a>
-</h2>
-<p>Lets plot a classic UMAP with <code>DimPlot</code>- defaults to the clusters on a ‘umap’ view.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc_processed</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-20-1.png" width="672"></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># equivalent to</span></span>
-<span><span class="co">#DimPlot(pbmc_processed, reduction = 'umap')</span></span></code></pre></div>
-<p>What about checking some gene expression? Genes are called ‘features’ in a Seurat object (because if it was CITE-seq they’d be proteins!). So the <code><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot()</a></code> function will show gene expression.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">pbmc_processed</span>, features <span class="op">=</span>  <span class="st">"CD14"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
-<p>It also works for continuous cell-level data - any column in the metadata table.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">pbmc_processed</span>, features <span class="op">=</span>  <span class="st">"percent.mt"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
-<p>And what about showing CD14 expression across which clusters (or any other categorical information in the metadata)</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">pbmc_processed</span>, features <span class="op">=</span> <span class="st">'CD14'</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-23-1.png" width="672"></div>
-<div id="challenge-plotting" class="section level4 unnumbered challenge">
-<h4>Challenge: Plotting<a class="anchor" aria-label="anchor" href="#challenge-plotting"><i class="fas fa-link"></i></a>
-</h4>
-<p>Plot your favourite gene. What cluster is it found in?</p>
-<p>Tip: You can check if the gene is in the dataset by looking for it in the rownames of the seurat object <code>"CCT3" %in% rownames(pbmc_processed)</code></p>
 
-</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -236,7 +212,6 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <li><a class="nav-link" href="#structure"><span class="header-section-number">5</span> Structure</a></li>
 <li><a class="nav-link" href="#load-an-existing-seurat-object"><span class="header-section-number">5.1</span> Load an existing Seurat object</a></li>
 <li><a class="nav-link" href="#whats-in-there"><span class="header-section-number">5.2</span> What’s in there?</a></li>
-<li><a class="nav-link" href="#plotting"><span class="header-section-number">5.3</span> Plotting</a></li>
 </ul>
 
       <div class="book-extra">
@@ -254,7 +229,7 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 QC Filtering | scRNAseq Analysis in R with Seurat</title>
 <meta name="description" content="The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 7 QC Filtering | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and...">
@@ -111,7 +111,7 @@
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The $ operator can add columns to object metadata. </span></span>
 <span><span class="co"># This is a great place to stash QC stats</span></span>
 <span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.mt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span></span></code></pre></div>
@@ -140,23 +140,45 @@ several samples in our experiment. Add a <code>samplename</code> column to to th
 <li>We filter cells that have unique feature counts over 2,500 or less than 200</li>
 <li>We filter cells that have &gt;5% mitochondrial counts</li>
 </ul>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Visualize QC metrics as a violin plot</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nFeature_RNA"</span>, <span class="st">"nCount_RNA"</span>, <span class="st">"percent.mt"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/qc2-1.png" width="672"></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># FeatureScatter is typically used to visualize feature-feature relationships, </span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="co"># visualize the max and min </span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, features <span class="op">=</span> <span class="st">"nFeature_RNA"</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1000</span>,<span class="fl">3000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for y is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for y, which will replace the existing</span></span>
+<span><span class="co">#&gt; scale.</span></span>
+<span><span class="co">#&gt; Warning: Removed 2172 rows containing non-finite values</span></span>
+<span><span class="co">#&gt; (`stat_ydensity()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 2172 rows containing missing values</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/qc2-2.png" width="672"></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, features <span class="op">=</span> <span class="st">"nFeature_RNA"</span>,y.max <span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 530 rows containing non-finite values</span></span>
+<span><span class="co">#&gt; (`stat_ydensity()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 530 rows containing missing values</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/qc2-3.png" width="672"></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="co"># FeatureScatter is typically used to visualize feature-feature relationships, </span></span>
 <span><span class="co"># but can be used for anything calculated by the object, </span></span>
 <span><span class="co"># i.e. columns in object metadata, PC scores etc.</span></span>
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span><span class="op">)</span> </span>
 <span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"nFeature_RNA"</span><span class="op">)</span> </span>
 <span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/qc2-2.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/qc2-4.png" width="672"></div>
 <p>Lets look at the number of features (genes) to the percent mitochondrial genes plot.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nFeature_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span><span class="op">)</span> </span>
 <span><span class="va">plot3</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-24-1.png" width="672"></div>
 <!-- #### Challenge: Ribosomal gene expression as a QC metric {- .challenge} -->
 <!-- Ribosomal gene expression could be another factor to look into your cells within your experiment. -->
 <!-- Create more columns of metadata using `PercentageFeatureSet` function, this time search for ribosomal genes. We can  calculate the percentage for the large subunit (RPL) and small subunit (RPS) ribosomal genes.  -->
@@ -173,11 +195,25 @@ several samples in our experiment. Add a <code>samplename</code> column to to th
 <!-- Highlight cells with very low percentage of ribosomal genes, create a new column in the meta.data table and with `FeatureScatter` make a plot of the RNA count and mitochondrial percentage with the cells with very low ribosomal gene perentage. -->
 <!-- </details> -->
 <!-- ### { - } -->
+<p>you can check different thresholds of mito percentage</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Number of cells left after filters</span></span>
+<span><span class="co"># percentage of cell with less than 10% mito</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.mt</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] 99.78</span></span>
+<span></span>
+<span><span class="co"># percentage of cell with less than 20% mito</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.mt</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 99.93</span></span>
+<span></span>
+<span><span class="co"># percentage of cell with less than 30% mito</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.mt</span> <span class="op">&lt;</span> <span class="fl">30</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">2</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] 100</span></span></code></pre></div>
 <p>Okay we are happy with our thresholds for mitochondrial percentage in cells, lets apply them and subset our data. This will remove the cells we think are of poor quality.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">pbmc</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">200</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="fl">2500</span> <span class="op">&amp;</span> <span class="va">percent.mt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>Lets replot the feature scatters and see what they look like.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span><span class="op">)</span> </span>
 <span><span class="va">plot6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"nFeature_RNA"</span><span class="op">)</span> </span>
 <span><span class="va">plot5</span> <span class="op">+</span> <span class="va">plot6</span></span></code></pre></div>
@@ -194,7 +230,7 @@ several samples in our experiment. Add a <code>samplename</code> column to to th
 <ul>
 <li>What thresholds would you chose to apply to this modern dataset?</li>
 </ul>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc10k_unfiltered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/10k_PBMC_v3.1ChromiumX_Intronic.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">pbmc10k_unfiltered</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nFeature_RNA"</span>, <span class="st">"nCount_RNA"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 
@@ -226,7 +262,7 @@ several samples in our experiment. Add a <code>samplename</code> column to to th
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

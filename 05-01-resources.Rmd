@@ -30,6 +30,7 @@ Useful resources for next steps.
 *	[ShinyCell makes interactive Shiny app from Seurat output](https://github.com/SGDDNB/ShinyCell)
 *	[iCellR interactive data explorer](https://github.com/rezakj/iCellR)
 *	[Diffusion maps for single cell instead of umaps](https://www.helmholtz-munich.de/icb/research/groups/marr-lab/software/destiny/index.html)
+*[Projections of a high-dimensional dataset with an animated scatter-plot](https://logarithmic.net/langevitour/)
 
 #### Papers
 *   [Doublet cell detection method benchmarking paper.](https://www.cell.com/cell-systems/fulltext/S2405-4712(20)30459-2)

@@ -18,13 +18,9 @@ BiocManager likes to update installed packages, but we have disabled this in the
 
 These instructions have been tested with R version 4.2.1 and Bioconductor version 3.16.
 
-```{r, eval=FALSE}
+```{r eval=FALSE}
 ## Install required packages for Seurat:
 install.packages(c("Seurat", "dplyr", "remotes", "R.utils"))
-
-# 2022-10-30 Harmony failed checks on CRAN. Need to use some old versions for now.
-remotes::install_version("RcppArmadillo", version="0.11.2.4.0")
-remotes::install_version("harmony", version="0.1", upgrade="never")
 
 ## Install required Bioconductor packages
 install.packages("BiocManager")
@@ -34,10 +30,6 @@ BiocManager::install(c('SingleR', 'celldex',
                        'SummarizedExperiment', 'batchelor', 'Matrix.utils'),
                      update=FALSE)
 
-## Install dev versions of some interactive graphics packages
-remotes::install_github("plotly/plotly.R")
-remotes::install_github("pfh/langevitour")
-
 ## install clustree
 install.packages("clustree")
 install.packages("RColorBrewer")
@@ -45,13 +37,17 @@ install.packages("RColorBrewer")
 
 ## Raw Data
 
-```{r eval=FALSE}
+```{r }
+# where are you? what folder are you working in
 
-## Download and untar the raw data
+getwd()
+
+## Download and untar the data
 download.file(
-    "http://10x.files.s3-us-west-2.amazonaws.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz",
-    "pbmc3k_filtered_gene_bc_matrices.tar.gz")
+    "https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar","data.tar")
 
-untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
+untar("data.tar")
+
+
 ```
 

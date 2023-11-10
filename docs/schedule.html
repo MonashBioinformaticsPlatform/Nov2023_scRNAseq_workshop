@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Schedule | scRNAseq Analysis in R with Seurat</title>
-<meta name="description" content="We will take 2 short breaks between topics each day. Day 1 Time Content 1:00 AEST Welcome and Intro 1:30 AEST Seurat Intro QC and filtering PCA and UMAP 4:30 AEST Finish  Day 2 Time Content 1:00...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="description" content="Time Content 10:00 Getting started Welcome and Housekeeping Background on ScRNAseq + R tools Seurat Object Load data 11:50 00:10 Break QC filtering Normalisation 13:05 Lunch Break PCAs and UMAPs...">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Schedule | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
-<meta property="og:description" content="We will take 2 short breaks between topics each day. Day 1 Time Content 1:00 AEST Welcome and Intro 1:30 AEST Seurat Intro QC and filtering PCA and UMAP 4:30 AEST Finish  Day 2 Time Content 1:00...">
+<meta property="og:description" content="Time Content 10:00 Getting started Welcome and Housekeeping Background on ScRNAseq + R tools Seurat Object Load data 11:50 00:10 Break QC filtering Normalisation 13:05 Lunch Break PCAs and UMAPs...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Schedule | scRNAseq Analysis in R with Seurat">
-<meta name="twitter:description" content="We will take 2 short breaks between topics each day. Day 1 Time Content 1:00 AEST Welcome and Intro 1:30 AEST Seurat Intro QC and filtering PCA and UMAP 4:30 AEST Finish  Day 2 Time Content 1:00...">
+<meta name="twitter:description" content="Time Content 10:00 Getting started Welcome and Housekeeping Background on ScRNAseq + R tools Seurat Object Load data 11:50 00:10 Break QC filtering Normalisation 13:05 Lunch Break PCAs and UMAPs...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1.9000/transition.js"></script><script src="libs/bs3compat-0.5.1.9000/tabs.js"></script><script src="libs/bs3compat-0.5.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -76,71 +76,82 @@
 <h1>
 <span class="header-section-number">4</span> Schedule<a class="anchor" aria-label="anchor" href="#schedule"><i class="fas fa-link"></i></a>
 </h1>
-<p>We will take 2 short breaks between topics each day.</p>
-<div id="day-1" class="section level3 unnumbered">
-<h3>Day 1<a class="anchor" aria-label="anchor" href="#day-1"><i class="fas fa-link"></i></a>
-</h3>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
-<th>Time</th>
-<th>Content</th>
+<th align="center">Time</th>
+<th align="center">Content</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>1:00 AEST</td>
-<td>Welcome and Intro</td>
+<td align="center">10:00</td>
+<td align="center">Getting started</td>
 </tr>
 <tr class="even">
-<td>1:30 AEST</td>
-<td>Seurat Intro</td>
+<td align="center"></td>
+<td align="center">Welcome and Housekeeping</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td>QC and filtering</td>
+<td align="center"></td>
+<td align="center">Background on ScRNAseq + R tools</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>PCA and UMAP</td>
+<td align="center"></td>
+<td align="center">Seurat Object</td>
 </tr>
 <tr class="odd">
-<td>4:30 AEST</td>
-<td>Finish</td>
+<td align="center"></td>
+<td align="center">Load data</td>
+</tr>
+<tr class="even">
+<td align="center">11:50</td>
+<td align="center">00:10 Break</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">QC filtering</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Normalisation</td>
+</tr>
+<tr class="odd">
+<td align="center">13:05</td>
+<td align="center">Lunch Break</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">PCAs and UMAPs</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">Clustering</td>
+</tr>
+<tr class="even">
+<td align="center">15:45</td>
+<td align="center">00:10 Break</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">Cluster markers</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">SingleR</td>
+</tr>
+<tr class="odd">
+<td align="center">16:25</td>
+<td align="center">00:10 Break</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Differential Expression</td>
+</tr>
+<tr class="odd">
+<td align="center">17:00</td>
+<td align="center">Final remarks and conclusion</td>
 </tr>
 </tbody>
 </table></div>
-</div>
-<div id="day-2" class="section level3 unnumbered">
-<h3>Day 2<a class="anchor" aria-label="anchor" href="#day-2"><i class="fas fa-link"></i></a>
-</h3>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th>Time</th>
-<th>Content</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>1:00 AEST</td>
-<td>PCA and UMAP continued</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>Clustering + Markers</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>Assigning Celltypes</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>Differential Expression</td>
-</tr>
-<tr class="odd">
-<td>4:30 AEST</td>
-<td>Finish</td>
-</tr>
-</tbody>
-</table></div>
-</div>
 </div>
 
 
@@ -150,12 +161,7 @@
 <div class="next"><a href="structure.html"><span class="header-section-number">5</span> Structure</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li>
-<a class="nav-link" href="#schedule"><span class="header-section-number">4</span> Schedule</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#day-1">Day 1</a></li>
-<li><a class="nav-link" href="#day-2">Day 2</a></li>
-</ul>
-</li></ul>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#schedule"><span class="header-section-number">4</span> Schedule</a></li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -172,7 +178,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

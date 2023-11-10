@@ -1,28 +1,25 @@
 # Schedule {#schedule}
-
-We will take 2 short breaks between topics each day.
-
-### Day 1 {-}
-
 | Time      | Content               |
-|-----------|-----------------------|
-| 1:00 AEST | Welcome and Intro     |
-| 1:30 AEST | Seurat Intro          |
-|           | QC and filtering      |
-|           | PCA and UMAP          |
-| 4:30 AEST | Finish                |
+| :---:|  :----: | 
+|10:00|		Getting started |
+|	|	Welcome and Housekeeping |
+| |	Background on ScRNAseq + R tools|
+| | Seurat Object |
+| |Load data |
+|11:50|	00:10  Break|
+||	QC filtering|
+||Normalisation|
+|13:05|	Lunch Break|
+|| PCAs and UMAPs|
+||	Clustering|
+|15:45	|00:10	Break|
+||	Cluster markers|
+||SingleR|
+|16:25|	00:10	Break|
+||Differential Expression
+|17:00|Final remarks and conclusion|
 
 
-### Day 2 {-}
-
-
-| Time      | Content                 |
-|-----------|-------------------------|
-| 1:00 AEST | PCA and UMAP continued  |
-|           | Clustering + Markers    |
-|           | Assigning Celltypes     |
-|           | Differential Expression |
-| 4:30 AEST | Finish                  |
 
 
 

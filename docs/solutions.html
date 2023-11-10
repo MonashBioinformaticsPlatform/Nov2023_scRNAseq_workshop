@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 18 Solutions | scRNAseq Analysis in R with Seurat</title>
 <meta name="description" content="18.1 Discussion: The Seurat Object in R ## To look at our seurat object str(pbmc) ## To access the meta.data slot pbmc@meta.data ## meta.data contains cell metadata identified by cell barcode,...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 18 Solutions | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="18.1 Discussion: The Seurat Object in R ## To look at our seurat object str(pbmc) ## To access the meta.data slot pbmc@meta.data ## meta.data contains cell metadata identified by cell barcode,...">
@@ -80,7 +80,7 @@
 <h2>
 <span class="header-section-number">18.1</span> Discussion: The Seurat Object in R<a class="anchor" aria-label="anchor" href="#discussion-the-seurat-object-in-r-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## To look at our seurat object</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span></span>
 <span></span>
@@ -109,7 +109,7 @@
 <h2>
 <span class="header-section-number">18.2</span> Challenge: The meta.data slot in the Seurat object<a class="anchor" aria-label="anchor" href="#challenge-the-meta.data-slot-in-the-seurat-object-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show QC metrics for the first 5 cells</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">@</span><span class="va">meta.data</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -117,7 +117,7 @@
 <h2>
 <span class="header-section-number">18.3</span> Challenge: Ribosomal gene expression as a QC metric<a class="anchor" aria-label="anchor" href="#challenge-ribosomal-gene-expression-as-a-qc-metric"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^RPL"</span><span class="op">)</span></span>
 <span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^RPS"</span><span class="op">)</span></span>
 <span></span>
@@ -125,7 +125,7 @@
 <span><span class="va">plot1</span></span></code></pre></div>
 <p>The large and small ribosomal subunit genes are correlated within cell.</p>
 <p>What about with mitochondria and gene, feature counts?</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"percent.riboL"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span><span class="op">)</span></span>
 <span><span class="va">plot2</span></span></code></pre></div>
 <p>There are cells with low ribosome and low mitochondrial gene percentages, and some outliers too (low ribo, high mt).</p>
@@ -133,7 +133,7 @@
 <p>To highlight cells with very low percentage of ribosomal genes, create a new column in the meta.data table and
 with <code>FeatureScatter</code> make a plot of the RNA count and mitochondrial percentage with the cells with very low
 ribosomal gene perentage.</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc</span><span class="op">$</span><span class="va">lowRiboL</span> <span class="op">&lt;-</span> <span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboL</span> <span class="op">&lt;=</span> <span class="fl">5</span></span>
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span>, group.by <span class="op">=</span> <span class="st">"lowRiboL"</span><span class="op">)</span></span>
 <span><span class="va">plot1</span></span></code></pre></div>
@@ -142,7 +142,7 @@ ribosomal gene perentage.</p>
 <h2>
 <span class="header-section-number">18.4</span> Challenge: Labelling Genes of Interest<a class="anchor" aria-label="anchor" href="#challenge-labelling-genes-of-interest"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># earlier we created a variable genes plot</span></span>
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/VariableFeaturePlot.html">VariableFeaturePlot</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span></span>
 <span></span>
@@ -159,12 +159,12 @@ ribosomal gene perentage.</p>
 <span class="header-section-number">18.5</span> Challenge: Try different cluster settings<a class="anchor" aria-label="anchor" href="#challenge-try-different-cluster-settings-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Setting the resolution to 0.05 produces less clusters:</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, resolution <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc2</span>, reduction <span class="op">=</span> <span class="st">'pca'</span>, dims<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc2</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
 <p>Using only the first two principal components, the clusters look muddled in the UMAP:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">pbmc</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">pbmc3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc3</span>, resolution <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc3</span>, reduction <span class="op">=</span> <span class="st">'pca'</span>, dims<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -175,7 +175,7 @@ ribosomal gene perentage.</p>
 <span class="header-section-number">18.6</span> Challenge: Reference Based Annotation<a class="anchor" aria-label="anchor" href="#challenge-reference-based-annotation"><i class="fas fa-link"></i></a>
 </h2>
 <p>See if you can annotate the data with the fine labels from the Monoco reference dataset and whether it improves the cell type annotation resolution.</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monaco</span> <span class="op">&lt;-</span> <span class="fu">celldex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/celldex/man/MonacoImmuneData.html">MonacoImmuneData</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">monaco.pred.fine</span> <span class="op">&lt;-</span> <span class="fu">SingleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html">SingleR</a></span><span class="op">(</span></span>
 <span>  test <span class="op">=</span> <span class="va">sce</span>, ref <span class="op">=</span> <span class="va">monaco</span>, labels <span class="op">=</span> <span class="va">monaco</span><span class="op">$</span><span class="va">label.fine</span><span class="op">)</span></span>
@@ -221,7 +221,7 @@ ribosomal gene perentage.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

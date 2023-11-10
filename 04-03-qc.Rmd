@@ -68,6 +68,13 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 ```{r qc2}
 #Visualize QC metrics as a violin plot
 VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+
+# visualize the max and min 
+VlnPlot(pbmc, features = "nFeature_RNA")+ scale_y_continuous(limits = c(1000,3000))
+VlnPlot(pbmc, features = "nFeature_RNA",y.max =1000)
+
+
 # FeatureScatter is typically used to visualize feature-feature relationships, 
 # but can be used for anything calculated by the object, 
 # i.e. columns in object metadata, PC scores etc.
@@ -110,12 +117,29 @@ plot3
 <!-- Highlight cells with very low percentage of ribosomal genes, create a new column in the meta.data table and with `FeatureScatter` make a plot of the RNA count and mitochondrial percentage with the cells with very low ribosomal gene perentage. -->
 <!-- </details> -->
 <!-- ### { - } --> 
+you can check different thresholds of mito percentage
+
+```{r}
+#Number of cells left after filters
+# percentage of cell with less than 10% mito
+round(sum(pbmc$percent.mt < 10)/dim(pbmc)[2]*100,2) 
+
+# percentage of cell with less than 20% mito
+round((sum(pbmc$percent.mt < 20)/dim(pbmc)[2])*100,2)
+
+# percentage of cell with less than 30% mito
+round((sum(pbmc$percent.mt < 30)/dim(pbmc)[2])*100,2) 
+
+
+```
 
 Okay we are happy with our thresholds for mitochondrial percentage in cells, lets apply them and subset our data. This will remove the cells we think are of poor quality. 
 
 ```{r}
 pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 ```
+
+
 
 Lets replot the feature scatters and see what they look like. 
 

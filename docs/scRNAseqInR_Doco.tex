@@ -119,7 +119,7 @@
 
 \title{scRNAseq Analysis in R with Seurat}
 \author{}
-\date{\vspace{-2.5em}Compiled: November 06, 2023}
+\date{\vspace{-2.5em}Compiled: November 10, 2023}
 
 \begin{document}
 \maketitle
@@ -223,10 +223,6 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 \DocumentationTok{\#\# Install required packages for Seurat:}
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Seurat"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{, }\StringTok{"R.utils"}\NormalTok{))}
 
-\CommentTok{\# 2022{-}10{-}30 Harmony failed checks on CRAN. Need to use some old versions for now.}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"RcppArmadillo"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.11.2.4.0"}\NormalTok{)}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.1"}\NormalTok{, }\AttributeTok{upgrade=}\StringTok{"never"}\NormalTok{)}
-
 \DocumentationTok{\#\# Install required Bioconductor packages}
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
 \NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SingleR\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}celldex\textquotesingle{}}\NormalTok{,}
@@ -234,10 +230,6 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
                        \StringTok{\textquotesingle{}limma\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}S4Vectors\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}SingleCellExperiment\textquotesingle{}}\NormalTok{,}
                        \StringTok{\textquotesingle{}SummarizedExperiment\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}batchelor\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Matrix.utils\textquotesingle{}}\NormalTok{),}
                      \AttributeTok{update=}\ConstantTok{FALSE}\NormalTok{)}
-
-\DocumentationTok{\#\# Install dev versions of some interactive graphics packages}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"plotly/plotly.R"}\NormalTok{)}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"pfh/langevitour"}\NormalTok{)}
 
 \DocumentationTok{\#\# install clustree}
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{"clustree"}\NormalTok{)}
@@ -250,13 +242,16 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# where are you? what folder are you working in}
 
-\DocumentationTok{\#\# Download and untar the raw data}
+\FunctionTok{getwd}\NormalTok{()}
+\CommentTok{\#\textgreater{} [1] "/Users/lper0012/Dropbox/BioPlatform/Teaching/Nov2023\_scRNAseq\_workshop"}
+
+\DocumentationTok{\#\# Download and untar the data}
 \FunctionTok{download.file}\NormalTok{(}
-    \StringTok{"http://10x.files.s3{-}us{-}west{-}2.amazonaws.com/samples/cell/pbmc3k/pbmc3k\_filtered\_gene\_bc\_matrices.tar.gz"}\NormalTok{,}
-    \StringTok{"pbmc3k\_filtered\_gene\_bc\_matrices.tar.gz"}\NormalTok{)}
+    \StringTok{"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar"}\NormalTok{,}\StringTok{"data.tar"}\NormalTok{)}
 
-\FunctionTok{untar}\NormalTok{(}\StringTok{"pbmc3k\_filtered\_gene\_bc\_matrices.tar.gz"}\NormalTok{)}
+\FunctionTok{untar}\NormalTok{(}\StringTok{"data.tar"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -422,42 +417,30 @@ It will ask for a password - this should be the same password as your user accou
 \hypertarget{schedule}{%
 \chapter{Schedule}\label{schedule}}
 
-We will take 2 short breaks between topics each day.
-
-\hypertarget{day-1}{%
-\subsection*{Day 1}\label{day-1}}
-\addcontentsline{toc}{subsection}{Day 1}
-
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}cc@{}}
 \toprule\noalign{}
 Time & Content \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-1:00 AEST & Welcome and Intro \\
-1:30 AEST & Seurat Intro \\
-& QC and filtering \\
-& PCA and UMAP \\
-4:30 AEST & Finish \\
-\end{longtable}
-
-\hypertarget{day-2}{%
-\subsection*{Day 2}\label{day-2}}
-\addcontentsline{toc}{subsection}{Day 2}
-
-\begin{longtable}[]{@{}ll@{}}
-\toprule\noalign{}
-Time & Content \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1:00 AEST & PCA and UMAP continued \\
-& Clustering + Markers \\
-& Assigning Celltypes \\
+10:00 & Getting started \\
+& Welcome and Housekeeping \\
+& Background on ScRNAseq + R tools \\
+& Seurat Object \\
+& Load data \\
+11:50 & 00:10 Break \\
+& QC filtering \\
+& Normalisation \\
+13:05 & Lunch Break \\
+& PCAs and UMAPs \\
+& Clustering \\
+15:45 & 00:10 Break \\
+& Cluster markers \\
+& SingleR \\
+16:25 & 00:10 Break \\
 & Differential Expression \\
-4:30 AEST & Finish \\
+17:00 & Final remarks and conclusion \\
 \end{longtable}
 
 \hypertarget{part-seurat-object}{%
@@ -555,6 +538,7 @@ And here's the one we prepared earlier. Seurat objects are usually saved as `.rd
 \CommentTok{\#\textgreater{} An object of class Seurat }
 \CommentTok{\#\textgreater{} 13714 features across 2700 samples within 1 assay }
 \CommentTok{\#\textgreater{} Active assay: RNA (13714 features, 2000 variable features)}
+\CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
 \CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
 \end{Highlighting}
 \end{Shaded}
@@ -619,6 +603,12 @@ But the raw counts data is accessible too.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{GetAssayData}\NormalTok{(pbmc\_processed, }\AttributeTok{slot=}\StringTok{\textquotesingle{}counts\textquotesingle{}}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]}
+\CommentTok{\#\textgreater{} Warning: The \textasciigrave{}slot\textasciigrave{} argument of \textasciigrave{}GetAssayData()\textasciigrave{} is deprecated as of}
+\CommentTok{\#\textgreater{} SeuratObject 5.0.0.}
+\CommentTok{\#\textgreater{} i Please use the \textasciigrave{}layer\textasciigrave{} argument instead.}
+\CommentTok{\#\textgreater{} This warning is displayed once every 8 hours.}
+\CommentTok{\#\textgreater{} Call \textasciigrave{}lifecycle::last\_lifecycle\_warnings()\textasciigrave{} to see where}
+\CommentTok{\#\textgreater{} this warning was generated.}
 \CommentTok{\#\textgreater{} 15 x 2 sparse Matrix of class "dgCMatrix"}
 \CommentTok{\#\textgreater{}               AAACATACAACCAC{-}1 AAACATTGAGCTAC{-}1}
 \CommentTok{\#\textgreater{} AL627309.1                   .                .}
@@ -638,66 +628,6 @@ But the raw counts data is accessible too.
 \CommentTok{\#\textgreater{} TNFRSF18                     .                2}
 \end{Highlighting}
 \end{Shaded}
-
-Seurat generally hides alot of this data complexity, and provides functions for typical tasks. Like plotting.
-
-\hypertarget{plotting}{%
-\section{Plotting}\label{plotting}}
-
-Lets plot a classic UMAP with \texttt{DimPlot}- defaults to the clusters on a `umap' view.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{DimPlot}\NormalTok{(pbmc\_processed)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-20-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# equivalent to}
-\CommentTok{\#DimPlot(pbmc\_processed, reduction = \textquotesingle{}umap\textquotesingle{})}
-\end{Highlighting}
-\end{Shaded}
-
-What about checking some gene expression? Genes are called `features' in a Seurat object (because if it was CITE-seq they'd be proteins!). So the \texttt{FeaturePlot()} function will show gene expression.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{FeaturePlot}\NormalTok{(pbmc\_processed, }\AttributeTok{features =}  \StringTok{"CD14"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-21-1.pdf}
-
-It also works for continuous cell-level data - any column in the metadata table.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{FeaturePlot}\NormalTok{(pbmc\_processed, }\AttributeTok{features =}  \StringTok{"percent.mt"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-22-1.pdf}
-
-And what about showing CD14 expression across which clusters (or any other categorical information in the metadata)
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{VlnPlot}\NormalTok{(pbmc\_processed, }\AttributeTok{features =} \StringTok{\textquotesingle{}CD14\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-23-1.pdf}
-
-\hypertarget{challenge-plotting}{%
-\subsubsection*{Challenge: Plotting}\label{challenge-plotting}}
-\addcontentsline{toc}{subsubsection}{Challenge: Plotting}
-
-Plot your favourite gene. What cluster is it found in?
-
-Tip: You can check if the gene is in the dataset by looking for it in the rownames of the seurat object \texttt{"CCT3"\ \%in\%\ rownames(pbmc\_processed)}
 
 \hypertarget{load}{%
 \chapter{Load data}\label{load}}
@@ -769,6 +699,7 @@ We next use the count matrix to create a \texttt{Seurat} object. The object serv
 \CommentTok{\#\textgreater{} An object of class Seurat }
 \CommentTok{\#\textgreater{} 13714 features across 2700 samples within 1 assay }
 \CommentTok{\#\textgreater{} Active assay: RNA (13714 features, 0 variable features)}
+\CommentTok{\#\textgreater{}  2 layers present: counts, data}
 \end{Highlighting}
 \end{Shaded}
 
@@ -917,6 +848,38 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+
+
+\CommentTok{\# visualize the max and min }
+\FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \StringTok{"nFeature\_RNA"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\DecValTok{3000}\NormalTok{))}
+\CommentTok{\#\textgreater{} Scale for y is already present.}
+\CommentTok{\#\textgreater{} Adding another scale for y, which will replace the existing}
+\CommentTok{\#\textgreater{} scale.}
+\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing non{-}finite values}
+\CommentTok{\#\textgreater{} (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing missing values}
+\CommentTok{\#\textgreater{} (\textasciigrave{}geom\_point()\textasciigrave{}).}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/qc2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \StringTok{"nFeature\_RNA"}\NormalTok{,}\AttributeTok{y.max =}\DecValTok{1000}\NormalTok{)}
+\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing non{-}finite values}
+\CommentTok{\#\textgreater{} (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing missing values}
+\CommentTok{\#\textgreater{} (\textasciigrave{}geom\_point()\textasciigrave{}).}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/qc2-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+
 \CommentTok{\# FeatureScatter is typically used to visualize feature{-}feature relationships, }
 \CommentTok{\# but can be used for anything calculated by the object, }
 \CommentTok{\# i.e. columns in object metadata, PC scores etc.}
@@ -926,7 +889,7 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/qc2-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/qc2-4.pdf}
 
 Lets look at the number of features (genes) to the percent mitochondrial genes plot.
 
@@ -937,7 +900,26 @@ Lets look at the number of features (genes) to the percent mitochondrial genes p
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+you can check different thresholds of mito percentage
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Number of cells left after filters}
+\CommentTok{\# percentage of cell with less than 10\% mito}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sum}\NormalTok{(pbmc}\SpecialCharTok{$}\NormalTok{percent.mt }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(pbmc)[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{2}\NormalTok{) }
+\CommentTok{\#\textgreater{} [1] 99.78}
+
+\CommentTok{\# percentage of cell with less than 20\% mito}
+\FunctionTok{round}\NormalTok{((}\FunctionTok{sum}\NormalTok{(pbmc}\SpecialCharTok{$}\NormalTok{percent.mt }\SpecialCharTok{\textless{}} \DecValTok{20}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(pbmc)[}\DecValTok{2}\NormalTok{])}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 99.93}
+
+\CommentTok{\# percentage of cell with less than 30\% mito}
+\FunctionTok{round}\NormalTok{((}\FunctionTok{sum}\NormalTok{(pbmc}\SpecialCharTok{$}\NormalTok{percent.mt }\SpecialCharTok{\textless{}} \DecValTok{30}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(pbmc)[}\DecValTok{2}\NormalTok{])}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{2}\NormalTok{) }
+\CommentTok{\#\textgreater{} [1] 100}
+\end{Highlighting}
+\end{Shaded}
 
 Okay we are happy with our thresholds for mitochondrial percentage in cells, lets apply them and subset our data. This will remove the cells we think are of poor quality.
 
@@ -1285,20 +1267,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 10:38:24 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 10:38:24 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 10:38:24 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:38:24 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 13:50:48 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 13:50:48 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 13:50:48 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 13:50:48 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 10:38:24 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpkqwFdr/file189c7ee1ab1}
-\CommentTok{\#\textgreater{} 10:38:24 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 10:38:24 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 10:38:25 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:38:25 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 10:38:25 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 10:38:27 Optimization finished}
+\CommentTok{\#\textgreater{} 13:50:48 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpOPTSrl/file567078cbfd30}
+\CommentTok{\#\textgreater{} 13:50:48 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 13:50:48 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 13:50:48 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 13:50:49 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 13:50:49 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 13:50:51 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1389,7 +1371,7 @@ Check out the clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1641,7 +1623,7 @@ Plot a clustree to decide how many clusters you have and what resolution capture
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 Name cells with the corresponding cluster name at the resolution you pick. This case we are happy with 0.5.
 
@@ -1660,7 +1642,7 @@ Plot the UMAP with colored clusters with Dimplot
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 \hypertarget{clustermarkers}{%
 \chapter{Cluster Markers}\label{clustermarkers}}
@@ -1761,7 +1743,7 @@ We include several tools for visualizing marker expression. \texttt{VlnPlot()} (
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-37-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1770,7 +1752,7 @@ We include several tools for visualizing marker expression. \texttt{VlnPlot()} (
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-40-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-37-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1909,7 +1891,7 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 DotPlots
 
@@ -1919,7 +1901,7 @@ DotPlots
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-39-1.pdf}
 
 \texttt{DoHeatmap()} generates an expression heatmap for given cells and features. In this case, we are plotting the top 10 markers (or all markers if less than 10) for each cluster.
 
@@ -1971,7 +1953,7 @@ If you know markers for your cell types, use AddModuleScore to label them.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-43-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 \hypertarget{assigning-cell-type-identity-to-clusters}{%
 \section{Assigning cell type identity to clusters}\label{assigning-cell-type-identity-to-clusters}}
@@ -2142,7 +2124,7 @@ Keep any types that have more than 10 cells to the label, and put those labels b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-52-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-49-1.pdf}
 
 It is nice to see that even though SingleR does not use the clusters we computed earlier, the labels do seem to match those clusters reasonably well.
 
@@ -2297,6 +2279,7 @@ How many genes before filtering?
 \CommentTok{\#\textgreater{} An object of class Seurat }
 \CommentTok{\#\textgreater{} 35635 features across 5000 samples within 1 assay }
 \CommentTok{\#\textgreater{} Active assay: RNA (35635 features, 2000 variable features)}
+\CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
 \CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
 \end{Highlighting}
 \end{Shaded}
@@ -2305,12 +2288,12 @@ How many copies of each gene are there?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{total\_per\_gene }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{GetAssayData}\NormalTok{(kang, }\StringTok{\textquotesingle{}counts\textquotesingle{}}\NormalTok{))}
+\NormalTok{total\_per\_gene }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{GetAssayData}\NormalTok{(kang, }\StringTok{\textquotesingle{}RNA\textquotesingle{}}\NormalTok{))}
 \FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(total\_per\_gene))}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 Lets keep only those genes with at least 50 copies across the entire experiment.
 
@@ -2326,8 +2309,9 @@ How many genes after filtering?
 \begin{Highlighting}[]
 \NormalTok{kang}
 \CommentTok{\#\textgreater{} An object of class Seurat }
-\CommentTok{\#\textgreater{} 7216 features across 5000 samples within 1 assay }
-\CommentTok{\#\textgreater{} Active assay: RNA (7216 features, 1228 variable features)}
+\CommentTok{\#\textgreater{} 8710 features across 5000 samples within 1 assay }
+\CommentTok{\#\textgreater{} Active assay: RNA (8710 features, 1366 variable features)}
+\CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
 \CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
 \end{Highlighting}
 \end{Shaded}
@@ -2344,7 +2328,7 @@ An easy way is to subset the object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-59-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2353,7 +2337,7 @@ An easy way is to subset the object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-62-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-59-2.pdf}
 
 \hypertarget{default-wilcox-test}{%
 \section{Default Wilcox test}\label{default-wilcox-test}}
@@ -2384,12 +2368,12 @@ Look at the top differentially expressed genes.
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_wilcox)}
 \CommentTok{\#\textgreater{}                 p\_val avg\_log2FC pct.1 pct.2     p\_val\_adj}
-\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   4.928403 0.975 0.043 3.999004e{-}193}
-\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   6.963650 0.973 0.038 6.962045e{-}193}
-\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   4.736979 0.979 0.050 3.599428e{-}192}
-\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   4.847351 0.977 0.055 8.056075e{-}192}
-\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   4.766009 0.950 0.026 5.857010e{-}186}
-\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.143242 0.998 0.320 1.100322e{-}183}
+\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   4.928403 0.975 0.043 4.826958e{-}193}
+\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   6.963650 0.973 0.038 8.403466e{-}193}
+\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   4.736979 0.979 0.050 4.344653e{-}192}
+\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   4.847351 0.977 0.055 9.724004e{-}192}
+\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   4.766009 0.950 0.026 7.069645e{-}186}
+\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.143242 0.998 0.320 1.328132e{-}183}
 \CommentTok{\#\textgreater{}          AveExpr}
 \CommentTok{\#\textgreater{} RSAD2   1.686530}
 \CommentTok{\#\textgreater{} CXCL10  2.388462}
@@ -2419,7 +2403,7 @@ Look at the top differentially expressed genes.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-62-1.pdf}
 
 \hypertarget{seurat-negative-binomial}{%
 \section{Seurat Negative binomial}\label{seurat-negative-binomial}}
@@ -2480,7 +2464,7 @@ Look at the top differentially expressed genes.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-68-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-65-1.pdf}
 
 \hypertarget{pseudobulk}{%
 \section{Pseudobulk}\label{pseudobulk}}
@@ -2561,19 +2545,19 @@ Look at the significantly differentially expressed genes:
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_pseudobulk)}
 \CommentTok{\#\textgreater{}           logFC   AveExpr        t      P.Value}
-\CommentTok{\#\textgreater{} ISG20  5.151090 10.311187 34.62460 1.377577e{-}28}
-\CommentTok{\#\textgreater{} ISG15  6.926462 11.895928 33.45672 4.402969e{-}28}
-\CommentTok{\#\textgreater{} CXCL11 9.051653  7.260525 32.07090 1.838679e{-}27}
-\CommentTok{\#\textgreater{} IFIT3  6.980913  8.420719 28.54319 9.234346e{-}26}
-\CommentTok{\#\textgreater{} HERC5  6.998957  5.602349 28.68162 7.853707e{-}26}
-\CommentTok{\#\textgreater{} TMSB10 1.959063 11.466981 27.48469 3.264041e{-}25}
+\CommentTok{\#\textgreater{} ISG20  5.210610 10.304127 33.31799 9.865578e{-}22}
+\CommentTok{\#\textgreater{} CXCL11 9.159393  7.253464 33.29300 1.004258e{-}21}
+\CommentTok{\#\textgreater{} TMSB10 2.024478 11.459920 31.69678 3.213724e{-}21}
+\CommentTok{\#\textgreater{} HERC5  7.055238  5.595289 31.56552 3.545067e{-}21}
+\CommentTok{\#\textgreater{} CMPK2  6.834411  5.552654 29.78471 1.396730e{-}20}
+\CommentTok{\#\textgreater{} ISG15  6.965645 11.888868 28.02335 5.865512e{-}20}
 \CommentTok{\#\textgreater{}           adj.P.Val        B}
-\CommentTok{\#\textgreater{} ISG20  9.940598e{-}25 55.27733}
-\CommentTok{\#\textgreater{} ISG15  1.588591e{-}24 54.12183}
-\CommentTok{\#\textgreater{} CXCL11 4.422636e{-}24 51.56638}
-\CommentTok{\#\textgreater{} IFIT3  1.332701e{-}22 48.32088}
-\CommentTok{\#\textgreater{} HERC5  1.332701e{-}22 48.02111}
-\CommentTok{\#\textgreater{} TMSB10 2.950103e{-}22 47.34483}
+\CommentTok{\#\textgreater{} ISG20  4.373542e{-}18 39.85772}
+\CommentTok{\#\textgreater{} CXCL11 4.373542e{-}18 38.89788}
+\CommentTok{\#\textgreater{} TMSB10 7.719383e{-}18 38.52555}
+\CommentTok{\#\textgreater{} HERC5  7.719383e{-}18 37.61623}
+\CommentTok{\#\textgreater{} CMPK2  2.433104e{-}17 36.30413}
+\CommentTok{\#\textgreater{} ISG15  8.514769e{-}17 35.73098}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2596,7 +2580,7 @@ Look at the significantly differentially expressed genes:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-72-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-69-1.pdf}
 
 \hypertarget{discussion}{%
 \subsubsection*{Discussion}\label{discussion}}
@@ -2751,7 +2735,7 @@ We can then check the cell phase on the UMAP. In this dataset, phase isn't drivi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 Where a bias \emph{is} present, your course of action depends on the task at hand. It might involve `regressing out' the cell cycle variation when scaling data \texttt{ScaleData(kang,\ vars.to.regress="Phase")}, omitting cell-cycle dominated clusters, or just accounting for it in your differential expression calculations.
 
@@ -2818,7 +2802,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2826,7 +2810,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2851,7 +2835,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-3.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-3.pdf}
 
 There is a big difference between unstimulated and stimulated cells. This has split cells of the same type into pairs of clusters. If the difference was simply uniform, we could regress it out (e.g.~using \texttt{ScaleData(...,\ vars.to.regress="stim")}). However, as can be seen in the PCA plot, the difference is not uniform and we need to do something cleverer.
 
@@ -2864,7 +2848,9 @@ Harmony operates only on the PCA scores. The original gene expression levels rem
 \FunctionTok{library}\NormalTok{(harmony)}
 \CommentTok{\#\textgreater{} Loading required package: Rcpp}
 
-\NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunHarmony}\NormalTok{(kang, }\FunctionTok{c}\NormalTok{(}\StringTok{"stim"}\NormalTok{, }\StringTok{"ind"}\NormalTok{), }\AttributeTok{reduction=}\StringTok{"pca"}\NormalTok{)}
+\NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunHarmony}\NormalTok{(kang, }\FunctionTok{c}\NormalTok{(}\StringTok{"stim"}\NormalTok{, }\StringTok{"ind"}\NormalTok{), }\AttributeTok{reduction=}\StringTok{"pca"}\NormalTok{,}\AttributeTok{reduction.save=}\StringTok{"harmony"}\NormalTok{)}
+\CommentTok{\#\textgreater{} Transposing data matrix}
+\CommentTok{\#\textgreater{} Initializing state using k{-}means centroids initialization}
 \CommentTok{\#\textgreater{} Harmony 1/10}
 \CommentTok{\#\textgreater{} Harmony 2/10}
 \CommentTok{\#\textgreater{} Harmony 3/10}
@@ -2874,11 +2860,7 @@ Harmony operates only on the PCA scores. The original gene expression levels rem
 \CommentTok{\#\textgreater{} Harmony 7/10}
 \CommentTok{\#\textgreater{} Harmony 8/10}
 \CommentTok{\#\textgreater{} Harmony 9/10}
-\CommentTok{\#\textgreater{} Harmony converged after 9 iterations}
-\CommentTok{\#\textgreater{} Warning: Invalid name supplied, making object name}
-\CommentTok{\#\textgreater{} syntactically valid. New object name is}
-\CommentTok{\#\textgreater{} Seurat..ProjectDim.RNA.harmony; see ?make.names for more}
-\CommentTok{\#\textgreater{} details on syntax validity}
+\CommentTok{\#\textgreater{} Harmony 10/10}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2890,7 +2872,7 @@ This has added a new set of reduced dimensions to the Seurat object, \texttt{kan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-80-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-77-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2898,35 +2880,38 @@ This has added a new set of reduced dimensions to the Seurat object, \texttt{kan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-80-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-77-2.pdf}
 
 We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to compute a UMAP layout or to find clusters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 10:40:46 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 10:40:46 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 10:40:46 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:40:46 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 13:53:28 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
+\CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
+\CommentTok{\#\textgreater{} 13:53:28 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 13:53:28 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
+\CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
+\CommentTok{\#\textgreater{} 13:53:28 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 10:40:46 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpkqwFdr/file189c6e0d40c6}
-\CommentTok{\#\textgreater{} 10:40:46 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 10:40:47 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 10:40:47 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:40:48 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 10:40:48 Commencing optimization for 500 epochs, with 210490 positive edges}
-\CommentTok{\#\textgreater{} 10:40:52 Optimization finished}
-\CommentTok{\#\textgreater{} Warning: Cannot add objects with duplicate keys (offending}
-\CommentTok{\#\textgreater{} key: UMAP\_), setting key to \textquotesingle{}umap\_harmony\_\textquotesingle{}}
+\CommentTok{\#\textgreater{} 13:53:28 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpOPTSrl/file56703bd8367}
+\CommentTok{\#\textgreater{} 13:53:28 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 13:53:29 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 13:53:29 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 13:53:30 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 13:53:30 Commencing optimization for 500 epochs, with 210560 positive edges}
+\CommentTok{\#\textgreater{} 13:53:34 Optimization finished}
+\CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-81-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2938,10 +2923,10 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \CommentTok{\#\textgreater{} Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Number of nodes: 5000}
-\CommentTok{\#\textgreater{} Number of edges: 171396}
+\CommentTok{\#\textgreater{} Number of edges: 171031}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Running Louvain algorithm...}
-\CommentTok{\#\textgreater{} Maximum modularity in 10 random starts: 0.9324}
+\CommentTok{\#\textgreater{} Maximum modularity in 10 random starts: 0.9327}
 \CommentTok{\#\textgreater{} Number of communities: 9}
 \CommentTok{\#\textgreater{} Elapsed time: 0 seconds}
 \NormalTok{kang}\SpecialCharTok{$}\NormalTok{harmony\_clusters }\OtherTok{\textless{}{-}}\NormalTok{ kang}\SpecialCharTok{$}\NormalTok{seurat\_clusters}
@@ -2950,7 +2935,7 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-81-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2958,7 +2943,7 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-81-3.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-3.pdf}
 
 Having found a good set of clusters, we would usually perform differential expression analysis on the original data and include batches/runs/individuals as predictors in the linear model. In this example we could now compare un-stimulated and stimulated cells within each cluster. A particularly nice statistical approach that is possible here would be to convert the counts to pseudo-bulk data for the eight individuals, and then apply a bulk RNA-Seq differential expression analysis method. However there is still the problem that unstimulated and stimulated cells were processed in separate batches.
 
@@ -3030,6 +3015,7 @@ Useful resources for next steps.
   \href{https://github.com/rezakj/iCellR}{iCellR interactive data explorer}
 \item
   \href{https://www.helmholtz-munich.de/icb/research/groups/marr-lab/software/destiny/index.html}{Diffusion maps for single cell instead of umaps}
+  *\href{https://logarithmic.net/langevitour/}{Projections of a high-dimensional dataset with an animated scatter-plot}
 \end{itemize}
 
 \hypertarget{papers}{%

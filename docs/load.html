@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Load data | scRNAseq Analysis in R with Seurat</title>
 <meta name="description" content="This workshop follows the introductory Guided Clustering Tutorial tutorial from Seurat. The bulk of this workshop may be found in its original format there.  6.1 Setup the Seurat Object For this...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Load data | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="This workshop follows the introductory Guided Clustering Tutorial tutorial from Seurat. The bulk of this workshop may be found in its original format there.  6.1 Setup the Seurat Object For this...">
@@ -114,12 +114,12 @@
 <div id="section" class="section level3 unnumbered">
 <h3 class="unnumbered"><a class="anchor" aria-label="anchor" href="#section"><i class="fas fa-link"></i></a></h3>
 <p>We next use the count matrix to create a <code>Seurat</code> object. The object serves as a container that contains both data (like the count matrix) and analysis (like PCA, or clustering results) for a single-cell dataset. For a technical discussion of the <code>Seurat</code> object structure, check out the <a href="https://github.com/satijalab/seurat/wiki">GitHub Wiki</a>. For example, the count matrix is stored in <code>pbmc@assays$RNA@counts</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the PBMC dataset</span></span>
 <span><span class="va">pbmc.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X.html">Read10X</a></span><span class="op">(</span>data.dir <span class="op">=</span> <span class="st">"data/pbmc3k/filtered_gene_bc_matrices/hg19/"</span><span class="op">)</span></span>
 <span><span class="co"># Initialize the Seurat object with the raw (non-normalized data).</span></span>
@@ -127,9 +127,10 @@
 <span><span class="va">pbmc</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
 <span><span class="co">#&gt; 13714 features across 2700 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (13714 features, 0 variable features)</span></span></code></pre></div>
+<span><span class="co">#&gt; Active assay: RNA (13714 features, 0 variable features)</span></span>
+<span><span class="co">#&gt;  2 layers present: counts, data</span></span></code></pre></div>
 <details><summary><strong>What does data in a count matrix look like?</strong>
-</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Lets examine a few genes in the first thirty cells</span></span>
 <span><span class="va">pbmc.data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>,<span class="st">"TCL1A"</span>,<span class="st">"MS4A1"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 3 x 30 sparse Matrix of class "dgCMatrix"</span></span>
@@ -143,7 +144,7 @@
 <span><span class="co">#&gt; TCL1A . . . .</span></span>
 <span><span class="co">#&gt; MS4A1 . . . .</span></span></code></pre></div>
 <p>The <code>.</code> values in the matrix represent 0s (no molecules detected). Since most values in an scRNA-seq matrix are 0, Seurat uses a sparse-matrix representation whenever possible. This results in significant memory and speed savings for Drop-seq/inDrop/10x data.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dense.size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/object.size.html">object.size</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">pbmc.data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dense.size</span></span>
 <span><span class="co">#&gt; 709591472 bytes</span></span>
@@ -186,7 +187,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

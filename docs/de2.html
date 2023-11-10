@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 14 Differential Expression | scRNAseq Analysis in R with Seurat</title>
 <meta name="description" content="There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic. There is the Seurat...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 14 Differential Expression | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic. There is the Seurat...">
@@ -82,7 +82,7 @@
 <hr>
 <p>We will now look at <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583">GSE96583</a>, another PBMC dataset. For speed, we will be looking at a subset of 5000 cells from this data. The cells in this dataset were pooled from eight individual donors. This data contains two batches of single cell sequencing. One of the batches was stimulated with IFN-beta.</p>
 <p>The data has already been processed as we have done with the first PBMC dataset, and can be loaded from the <code>kang2018.rds</code> file in the data folder.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/kang2018.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">kang</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                     orig.ident nCount_RNA nFeature_RNA  ind</span></span>
@@ -100,13 +100,13 @@
 <span><span class="co">#&gt; TGACGCCTTGCTTT-1 ctrl       CD4 T cells       ambs</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1 stim       CD4 T cells    singlet</span></span></code></pre></div>
 <p>How cells from each condition do we have?</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">kang</span><span class="op">$</span><span class="va">stim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ctrl stim </span></span>
 <span><span class="co">#&gt; 2449 2551</span></span></code></pre></div>
 <p>How many cells per individuals per group?</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">kang</span><span class="op">$</span><span class="va">ind</span>, <span class="va">kang</span><span class="op">$</span><span class="va">stim</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       </span></span>
 <span><span class="co">#&gt;        ctrl stim</span></span>
@@ -119,7 +119,7 @@
 <span><span class="co">#&gt;   1256  394  390</span></span>
 <span><span class="co">#&gt;   1488  410  542</span></span></code></pre></div>
 <p>And for each sample, how many of each cell type has been classified?</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">kang</span><span class="op">$</span><span class="va">ind</span>,<span class="va">kang</span><span class="op">$</span><span class="va">stim</span><span class="op">)</span>, <span class="va">kang</span><span class="op">$</span><span class="va">cell</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            </span></span>
 <span><span class="co">#&gt;             B cells CD14+ Monocytes CD4 T cells CD8 T cells</span></span>
@@ -189,38 +189,40 @@
 <p>When doing differential expression, you generally ignore genes with low expression.
 In single cell datasets, there are many genes like this. Filtering here to make our dataset smaller so it runs quicker, and there is less aggressive correction for multiple hypotheses.</p>
 <p>How many genes before filtering?</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
 <span><span class="co">#&gt; 35635 features across 5000 samples within 1 assay </span></span>
 <span><span class="co">#&gt; Active assay: RNA (35635 features, 2000 variable features)</span></span>
+<span><span class="co">#&gt;  3 layers present: counts, data, scale.data</span></span>
 <span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
 <p>How many copies of each gene are there?</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">kang</span>, <span class="st">'counts'</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">kang</span>, <span class="st">'RNA'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">total_per_gene</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-59-1.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-56-1.png" width="672"></div>
 <p>Lets keep only those genes with at least 50 copies across the entire experiment.</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="va">kang</span><span class="op">[</span><span class="va">total_per_gene</span> <span class="op">&gt;=</span> <span class="fl">50</span>, <span class="op">]</span> </span></code></pre></div>
 <p>How many genes after filtering?</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
-<span><span class="co">#&gt; 7216 features across 5000 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (7216 features, 1228 variable features)</span></span>
+<span><span class="co">#&gt; 8710 features across 5000 samples within 1 assay </span></span>
+<span><span class="co">#&gt; Active assay: RNA (8710 features, 1366 variable features)</span></span>
+<span><span class="co">#&gt;  3 layers present: counts, data, scale.data</span></span>
 <span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
 <p>We might like to see the effect of IFN-beta stimulation on each cell type individually. For the purposes of this workshop, just going to test one cell type; CD14+ Monocytes</p>
 <p>An easy way is to subset the object.</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set idents to 'cell' column.</span></span>
 <span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">kang</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">kang</span><span class="op">$</span><span class="va">cell</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-62-1.png" width="672"></div>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-59-1.png" width="672"></div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang.celltype</span> <span class="op">&lt;-</span> <span class="va">kang</span><span class="op">[</span>, <span class="va">kang</span><span class="op">$</span><span class="va">cell</span> <span class="op">==</span> <span class="st">"CD14+ Monocytes"</span> <span class="op">]</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang.celltype</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-62-2.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-59-2.png" width="672"></div>
 </div>
 </div>
 <div id="default-wilcox-test" class="section level2" number="14.2">
@@ -228,7 +230,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span class="header-section-number">14.2</span> Default Wilcox test<a class="anchor" aria-label="anchor" href="#default-wilcox-test"><i class="fas fa-link"></i></a>
 </h2>
 <p>To run this test, we change the Idents to the factor(column) we want to test. In this case, that’s ‘stim’.</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Change Ident to Condition</span></span>
 <span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">kang.celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">kang.celltype</span><span class="op">$</span><span class="va">stim</span></span>
 <span></span>
@@ -243,15 +245,15 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co"># Add average expression for plotting</span></span>
 <span><span class="va">de_result_wilcox</span><span class="op">$</span><span class="va">AveExpr</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="va">kang.celltype</span><span class="op">[[</span><span class="st">"RNA"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">de_result_wilcox</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>Look at the top differentially expressed genes.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">de_result_wilcox</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 p_val avg_log2FC pct.1 pct.2     p_val_adj</span></span>
-<span><span class="co">#&gt; RSAD2   5.541857e-197   4.928403 0.975 0.043 3.999004e-193</span></span>
-<span><span class="co">#&gt; CXCL10  9.648067e-197   6.963650 0.973 0.038 6.962045e-193</span></span>
-<span><span class="co">#&gt; IFIT3   4.988121e-196   4.736979 0.979 0.050 3.599428e-192</span></span>
-<span><span class="co">#&gt; TNFSF10 1.116418e-195   4.847351 0.977 0.055 8.056075e-192</span></span>
-<span><span class="co">#&gt; IFIT1   8.116699e-190   4.766009 0.950 0.026 5.857010e-186</span></span>
-<span><span class="co">#&gt; ISG15   1.524836e-187   6.143242 0.998 0.320 1.100322e-183</span></span>
+<span><span class="co">#&gt; RSAD2   5.541857e-197   4.928403 0.975 0.043 4.826958e-193</span></span>
+<span><span class="co">#&gt; CXCL10  9.648067e-197   6.963650 0.973 0.038 8.403466e-193</span></span>
+<span><span class="co">#&gt; IFIT3   4.988121e-196   4.736979 0.979 0.050 4.344653e-192</span></span>
+<span><span class="co">#&gt; TNFSF10 1.116418e-195   4.847351 0.977 0.055 9.724004e-192</span></span>
+<span><span class="co">#&gt; IFIT1   8.116699e-190   4.766009 0.950 0.026 7.069645e-186</span></span>
+<span><span class="co">#&gt; ISG15   1.524836e-187   6.143242 0.998 0.320 1.328132e-183</span></span>
 <span><span class="co">#&gt;          AveExpr</span></span>
 <span><span class="co">#&gt; RSAD2   1.686530</span></span>
 <span><span class="co">#&gt; CXCL10  2.388462</span></span>
@@ -259,7 +261,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co">#&gt; TNFSF10 1.682688</span></span>
 <span><span class="co">#&gt; IFIT1   1.584751</span></span>
 <span><span class="co">#&gt; ISG15   3.239774</span></span></code></pre></div>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">de_result_wilcox</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">AveExpr</span>, y<span class="op">=</span><span class="va">avg_log2FC</span>, col<span class="op">=</span><span class="va">p_val_adj</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'TRUE'</span><span class="op">=</span><span class="st">"red"</span>,<span class="st">'FALSE'</span><span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -274,14 +276,14 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Wilcox Test (Volcano)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-65-1.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-62-1.png" width="672"></div>
 </div>
 <div id="seurat-negative-binomial" class="section level2" number="14.3">
 <h2>
 <span class="header-section-number">14.3</span> Seurat Negative binomial<a class="anchor" aria-label="anchor" href="#seurat-negative-binomial"><i class="fas fa-link"></i></a>
 </h2>
 <p>Negative binonial test is run almost the same way - just need to specify it under ‘test.use’</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Change Ident to Condition</span></span>
 <span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">kang.celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">kang.celltype</span><span class="op">$</span><span class="va">stim</span></span>
@@ -298,7 +300,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co"># Add average expression for plotting</span></span>
 <span><span class="va">de_result_negbinom</span><span class="op">$</span><span class="va">AveExpr</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="va">kang.celltype</span><span class="op">[[</span><span class="st">"RNA"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">de_result_negbinom</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>Look at the top differentially expressed genes.</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">de_result_negbinom</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        p_val avg_log2FC pct.1 pct.2 p_val_adj  AveExpr</span></span>
 <span><span class="co">#&gt; ISG15      0   5.787224 0.998 0.320         0 3.239774</span></span>
@@ -307,7 +309,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co">#&gt; LY6E       0   2.900314 0.973 0.133         0 1.736931</span></span>
 <span><span class="co">#&gt; IFITM3     0   3.401677 0.994 0.267         0 2.190185</span></span>
 <span><span class="co">#&gt; ISG20      0   3.659844 0.994 0.272         0 2.319655</span></span></code></pre></div>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">de_result_negbinom</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">AveExpr</span>, y<span class="op">=</span><span class="va">avg_log2FC</span>, col<span class="op">=</span><span class="va">p_val_adj</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'TRUE'</span><span class="op">=</span><span class="st">"red"</span>,<span class="st">'FALSE'</span><span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -322,7 +324,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Negative Bionomial Test (Volcano)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-65-1.png" width="672"></div>
 </div>
 <div id="pseudobulk" class="section level2" number="14.4">
 <h2>
@@ -330,7 +332,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 </h2>
 <p>Pseudobulk analysis is an option where you have biological replicates. It is essentially pooling the individual cell counts and treating your expreiment like a bulk RNAseq.</p>
 <p>First, you need to build a pseudobulk matrix - the <code><a href="https://satijalab.org/seurat/reference/AggregateExpression.html">AggregateExpression()</a></code> function can do this, once you set the ‘Idents’ of your seurat object to your grouping factor (here, thats a combination of individual+treatment called ‘sample’, instead of the ‘stim’ treatment column).</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Tools for bulk differential expression</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioinf.wehi.edu.au/limma/">limma</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -365,7 +367,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <p>Now it looks like a bulk RNAseq experiment, so treat it like one.</p>
 <p>We can use the popular <code>limma</code> package for differential expression. Here is one <a href="https://ucdavis-bioinformatics-training.github.io/2018-June-RNA-Seq-Workshop/thursday/DE.html">tutorial</a>, and the hefty reference manual is hosted by <a href="https://bioconductor.org/packages/release/bioc/html/limma.html">bioconductor</a>.</p>
 <p>In brief, this code below constructs a linear model for this experiment that accounts for the variation in individuals and treatment. It then tests for differential expression between ‘stim’ and ‘ctrl’ groups.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span><span class="op">(</span><span class="va">pseudobulk_matrix</span><span class="op">)</span></span>
 <span><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html">calcNormFactors</a></span><span class="op">(</span><span class="va">dge</span><span class="op">)</span></span>
 <span></span>
@@ -386,23 +388,23 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="va">de_result_pseudobulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span><span class="op">(</span><span class="va">fit</span>, n <span class="op">=</span> <span class="cn">Inf</span>, adjust.method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span>
 <span><span class="va">de_result_pseudobulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">de_result_pseudobulk</span> , <span class="va">adj.P.Val</span><span class="op">)</span></span></code></pre></div>
 <p>Look at the significantly differentially expressed genes:</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">de_result_pseudobulk</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           logFC   AveExpr        t      P.Value</span></span>
-<span><span class="co">#&gt; ISG20  5.151090 10.311187 34.62460 1.377577e-28</span></span>
-<span><span class="co">#&gt; ISG15  6.926462 11.895928 33.45672 4.402969e-28</span></span>
-<span><span class="co">#&gt; CXCL11 9.051653  7.260525 32.07090 1.838679e-27</span></span>
-<span><span class="co">#&gt; IFIT3  6.980913  8.420719 28.54319 9.234346e-26</span></span>
-<span><span class="co">#&gt; HERC5  6.998957  5.602349 28.68162 7.853707e-26</span></span>
-<span><span class="co">#&gt; TMSB10 1.959063 11.466981 27.48469 3.264041e-25</span></span>
+<span><span class="co">#&gt; ISG20  5.210610 10.304127 33.31799 9.865578e-22</span></span>
+<span><span class="co">#&gt; CXCL11 9.159393  7.253464 33.29300 1.004258e-21</span></span>
+<span><span class="co">#&gt; TMSB10 2.024478 11.459920 31.69678 3.213724e-21</span></span>
+<span><span class="co">#&gt; HERC5  7.055238  5.595289 31.56552 3.545067e-21</span></span>
+<span><span class="co">#&gt; CMPK2  6.834411  5.552654 29.78471 1.396730e-20</span></span>
+<span><span class="co">#&gt; ISG15  6.965645 11.888868 28.02335 5.865512e-20</span></span>
 <span><span class="co">#&gt;           adj.P.Val        B</span></span>
-<span><span class="co">#&gt; ISG20  9.940598e-25 55.27733</span></span>
-<span><span class="co">#&gt; ISG15  1.588591e-24 54.12183</span></span>
-<span><span class="co">#&gt; CXCL11 4.422636e-24 51.56638</span></span>
-<span><span class="co">#&gt; IFIT3  1.332701e-22 48.32088</span></span>
-<span><span class="co">#&gt; HERC5  1.332701e-22 48.02111</span></span>
-<span><span class="co">#&gt; TMSB10 2.950103e-22 47.34483</span></span></code></pre></div>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; ISG20  4.373542e-18 39.85772</span></span>
+<span><span class="co">#&gt; CXCL11 4.373542e-18 38.89788</span></span>
+<span><span class="co">#&gt; TMSB10 7.719383e-18 38.52555</span></span>
+<span><span class="co">#&gt; HERC5  7.719383e-18 37.61623</span></span>
+<span><span class="co">#&gt; CMPK2  2.433104e-17 36.30413</span></span>
+<span><span class="co">#&gt; ISG15  8.514769e-17 35.73098</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">de_result_pseudobulk</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">AveExpr</span>, y<span class="op">=</span><span class="va">logFC</span>, col<span class="op">=</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'TRUE'</span><span class="op">=</span><span class="st">"red"</span>,<span class="st">'FALSE'</span><span class="op">=</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -417,7 +419,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Pseudobulk Test (Volcano)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-72-1.png" width="672"></div>
+<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-69-1.png" width="672"></div>
 <div id="discussion" class="section level4 unnumbered challenge">
 <h4>Discussion<a class="anchor" aria-label="anchor" href="#discussion"><i class="fas fa-link"></i></a>
 </h4>
@@ -457,7 +459,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 06, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 10, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

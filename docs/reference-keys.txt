@@ -13,7 +13,6 @@ schedule
 structure
 load-an-existing-seurat-object
 whats-in-there
-plotting
 load
 setup-the-seurat-object
 qc

@@ -101,7 +101,7 @@
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'SingleR'</span>, <span class="st">'celldex'</span>,</span>
 <span>                       <span class="st">'BiocGenerics'</span>, <span class="st">'DelayedArray'</span>, <span class="st">'DelayedMatrixStats'</span>,</span>
 <span>                       <span class="st">'limma'</span>, <span class="st">'S4Vectors'</span>, <span class="st">'SingleCellExperiment'</span>,</span>
-<span>                       <span class="st">'SummarizedExperiment'</span>, <span class="st">'batchelor'</span>, <span class="st">'Matrix.utils'</span><span class="op">)</span>,</span>
+<span>                       <span class="st">'SummarizedExperiment'</span> <span class="op">)</span>,</span>
 <span>                     update<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## install clustree</span></span>
@@ -119,6 +119,7 @@
 <span><span class="co">#&gt; [1] "/Users/lper0012/Dropbox/BioPlatform/Teaching/Nov2023_scRNAseq_workshop"</span></span>
 <span></span>
 <span><span class="co">## Download and untar the data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span></span>
 <span>    <span class="st">"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar"</span>,<span class="st">"data.tar"</span><span class="op">)</span></span>
 <span></span>

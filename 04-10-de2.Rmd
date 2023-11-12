@@ -109,7 +109,7 @@ de_result_wilcox <- FindMarkers(kang.celltype,
             )
 
 # Add average expression for plotting
-de_result_wilcox$AveExpr<- rowMeans(kang.celltype[["RNA"]][rownames(de_result_wilcox),])
+de_result_wilcox$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_wilcox),])
 ```
 
 Look at the top differentially expressed genes.
@@ -154,7 +154,7 @@ de_result_negbinom <- FindMarkers(kang.celltype,
 )
 
 # Add average expression for plotting
-de_result_negbinom$AveExpr<- rowMeans(kang.celltype[["RNA"]][rownames(de_result_negbinom),])
+de_result_negbinom$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_negbinom),])
 ```
 
 
@@ -217,11 +217,11 @@ In brief, this code below constructs a linear model for this experiment that acc
 dge <- DGEList(pseudobulk_matrix)
 dge <- calcNormFactors(dge)
 
-# Remove _ and everything after it - yeilds stim group
-stim <- gsub("_.*","",colnames(pseudobulk_matrix)) 
+# Remove _ or - and everything after it - yeilds stim group
+stim <- gsub("[-_].*","",colnames(pseudobulk_matrix)) 
 
-# Removing everything before the _ for the individua, then converting those numerical ind explictiy to text. Else limma will treat them as numbers!
-ind  <- as.character(gsub(".*_","",colnames(pseudobulk_matrix))) 
+# Removing everything before the _ or - for the individual, then converting those numerical ind explictiy to text. Else limma will treat them as numbers!
+ind  <- as.character(gsub(".*[-_]","",colnames(pseudobulk_matrix))) 
 
 design <- model.matrix( ~0 + stim + ind)
 vm  <- voom(dge, design = design, plot = FALSE)

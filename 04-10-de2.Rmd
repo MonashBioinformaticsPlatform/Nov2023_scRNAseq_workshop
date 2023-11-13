@@ -58,7 +58,7 @@ kang
 
 How many copies of each gene are there?
 ```{R}
-total_per_gene <- rowSums(GetAssayData(kang, 'RNA'))
+total_per_gene <- rowSums(GetAssayData(kang, assay='RNA', slot='counts'))
 hist(log10(total_per_gene))
 ```
 

@@ -5,6 +5,7 @@
 .httr-oauth
 .DS_Store
 data/
+data.tar
 data.zip
 data.tar.gz
 _bookdown

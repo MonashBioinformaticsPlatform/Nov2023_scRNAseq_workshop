@@ -60,3 +60,4 @@ challenge-labelling-genes-of-interest
 challenge-try-different-cluster-settings-1
 challenge-reference-based-annotation
 acknowledgements
+session-info

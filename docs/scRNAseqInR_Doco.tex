@@ -119,7 +119,7 @@
 
 \title{scRNAseq Analysis in R with Seurat}
 \author{}
-\date{\vspace{-2.5em}Compiled: November 10, 2023}
+\date{\vspace{-2.5em}Compiled: November 13, 2023}
 
 \begin{document}
 \maketitle
@@ -1268,20 +1268,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 14:55:37 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 14:55:37 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 14:55:37 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 14:55:37 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 12:52:51 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 12:52:51 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 12:52:51 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:52:51 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 14:55:37 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpDW4gdK/file7091823e475}
-\CommentTok{\#\textgreater{} 14:55:37 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 14:55:38 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 14:55:38 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 14:55:38 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 14:55:38 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 14:55:41 Optimization finished}
+\CommentTok{\#\textgreater{} 12:52:51 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpCXchUo/file1641f30d3910c}
+\CommentTok{\#\textgreater{} 12:52:51 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 12:52:52 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 12:52:52 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:52:52 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 12:52:52 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 12:52:54 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2359,7 +2359,7 @@ To run this test, we change the Idents to the factor(column) we want to test. In
 \NormalTok{            )}
 
 \CommentTok{\# Add average expression for plotting}
-\NormalTok{de\_result\_wilcox}\SpecialCharTok{$}\NormalTok{AveExpr}\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(kang.celltype[[}\StringTok{"RNA"}\NormalTok{]][}\FunctionTok{rownames}\NormalTok{(de\_result\_wilcox),])}
+\NormalTok{de\_result\_wilcox}\SpecialCharTok{$}\NormalTok{AveExpr}\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(kang.celltype[[}\StringTok{"RNA"}\NormalTok{]]}\SpecialCharTok{@}\NormalTok{data[}\FunctionTok{rownames}\NormalTok{(de\_result\_wilcox),])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2427,7 +2427,7 @@ Negative binonial test is run almost the same way - just need to specify it unde
 \NormalTok{)}
 
 \CommentTok{\# Add average expression for plotting}
-\NormalTok{de\_result\_negbinom}\SpecialCharTok{$}\NormalTok{AveExpr}\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(kang.celltype[[}\StringTok{"RNA"}\NormalTok{]][}\FunctionTok{rownames}\NormalTok{(de\_result\_negbinom),])}
+\NormalTok{de\_result\_negbinom}\SpecialCharTok{$}\NormalTok{AveExpr}\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(kang.celltype[[}\StringTok{"RNA"}\NormalTok{]]}\SpecialCharTok{@}\NormalTok{data[}\FunctionTok{rownames}\NormalTok{(de\_result\_negbinom),])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2521,11 +2521,11 @@ In brief, this code below constructs a linear model for this experiment that acc
 \NormalTok{dge }\OtherTok{\textless{}{-}} \FunctionTok{DGEList}\NormalTok{(pseudobulk\_matrix)}
 \NormalTok{dge }\OtherTok{\textless{}{-}} \FunctionTok{calcNormFactors}\NormalTok{(dge)}
 
-\CommentTok{\# Remove \_ and everything after it {-} yeilds stim group}
-\NormalTok{stim }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"\_.*"}\NormalTok{,}\StringTok{""}\NormalTok{,}\FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix)) }
+\CommentTok{\# Remove \_ or {-} and everything after it {-} yeilds stim group}
+\NormalTok{stim }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"[{-}\_].*"}\NormalTok{,}\StringTok{""}\NormalTok{,}\FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix)) }
 
-\CommentTok{\# Removing everything before the \_ for the individua, then converting those numerical ind explictiy to text. Else limma will treat them as numbers!}
-\NormalTok{ind  }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\StringTok{".*\_"}\NormalTok{,}\StringTok{""}\NormalTok{,}\FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix))) }
+\CommentTok{\# Removing everything before the \_ or {-} for the individual, then converting those numerical ind explictiy to text. Else limma will treat them as numbers!}
+\NormalTok{ind  }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\StringTok{".*[{-}\_]"}\NormalTok{,}\StringTok{""}\NormalTok{,}\FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix))) }
 
 \NormalTok{design }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{( }\SpecialCharTok{\textasciitilde{}}\DecValTok{0} \SpecialCharTok{+}\NormalTok{ stim }\SpecialCharTok{+}\NormalTok{ ind)}
 \NormalTok{vm  }\OtherTok{\textless{}{-}} \FunctionTok{voom}\NormalTok{(dge, }\AttributeTok{design =}\NormalTok{ design, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{)}
@@ -2888,24 +2888,24 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 14:58:29 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 12:56:02 UMAP embedding parameters a = 0.9922 b = 1.112}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 14:58:29 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 14:58:29 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:56:02 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 12:56:02 Using Annoy for neighbor search, n\_neighbors = 30}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 14:58:29 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 12:56:02 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 14:58:30 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpDW4gdK/file70911d16419d}
-\CommentTok{\#\textgreater{} 14:58:30 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 14:58:31 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 14:58:31 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 14:58:32 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 14:58:32 Commencing optimization for 500 epochs, with 210560 positive edges}
-\CommentTok{\#\textgreater{} 14:58:36 Optimization finished}
+\CommentTok{\#\textgreater{} 12:56:02 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpCXchUo/file1641f35c22e36}
+\CommentTok{\#\textgreater{} 12:56:02 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 12:56:03 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 12:56:03 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:56:04 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 12:56:04 Commencing optimization for 500 epochs, with 210560 positive edges}
+\CommentTok{\#\textgreater{} 12:56:08 Optimization finished}
 \CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
@@ -3386,6 +3386,34 @@ Do you lose any groups?
 This material is mostly based on the \href{https://satijalab.org/seurat/articles/pbmc3k_tutorial.html}{Seurat introductory tutorial.}
 
 It also draws from material for a \href{https://swbioinf.github.io/scRNAseqInR_Doco/index.html}{workshop provided by QCIF} developed by Sarah Williams and Ahmed Mehdi for the Australian Biocommons.
+
+\hypertarget{session-info}{%
+\chapter{Session info}\label{session-info}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\FunctionTok{library}\NormalTok{(pander)}
+\NormalTok{demo.Rmd\_session }\OtherTok{\textless{}{-}} \FunctionTok{sessionInfo}\NormalTok{()}
+\FunctionTok{pander}\NormalTok{(demo.Rmd\_session)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{R version 4.3.2 (2023-10-31)}
+
+\textbf{Platform:} aarch64-apple-darwin20 (64-bit)
+
+\textbf{locale:}
+en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\textbar C\textbar\textbar en\_US.UTF-8\textbar\textbar en\_US.UTF-8
+
+\textbf{attached base packages:}
+\emph{stats4}, \emph{stats}, \emph{graphics}, \emph{grDevices}, \emph{utils}, \emph{datasets}, \emph{methods} and \emph{base}
+
+\textbf{other attached packages:}
+\emph{pander(v.0.6.5)}, \emph{harmony(v.1.1.0)}, \emph{Rcpp(v.1.0.11)}, \emph{edgeR(v.4.0.1)}, \emph{limma(v.3.58.1)}, \emph{celldex(v.1.12.0)}, \emph{SingleR(v.2.4.0)}, \emph{SingleCellExperiment(v.1.24.0)}, \emph{SummarizedExperiment(v.1.32.0)}, \emph{Biobase(v.2.62.0)}, \emph{GenomicRanges(v.1.54.1)}, \emph{GenomeInfoDb(v.1.38.1)}, \emph{IRanges(v.2.36.0)}, \emph{S4Vectors(v.0.40.1)}, \emph{BiocGenerics(v.0.48.1)}, \emph{MatrixGenerics(v.1.14.0)}, \emph{matrixStats(v.1.1.0)}, \emph{clustree(v.0.5.0)}, \emph{ggraph(v.2.1.0)}, \emph{patchwork(v.1.1.3)}, \emph{ggplot2(v.3.4.4)}, \emph{dplyr(v.1.1.3)}, \emph{SeuratObject(v.5.0.0)} and \emph{Seurat(v.4.4.0)}
+
+\textbf{loaded via a namespace (and not attached):}
+\emph{spatstat.sparse(v.3.0-3)}, \emph{bitops(v.1.0-7)}, \emph{httr(v.1.4.7)}, \emph{RColorBrewer(v.1.1-3)}, \emph{tools(v.4.3.2)}, \emph{sctransform(v.0.4.1)}, \emph{backports(v.1.4.1)}, \emph{utf8(v.1.2.4)}, \emph{R6(v.2.5.1)}, \emph{lazyeval(v.0.2.2)}, \emph{uwot(v.0.1.16)}, \emph{withr(v.2.5.2)}, \emph{sp(v.2.1-1)}, \emph{gridExtra(v.2.3)}, \emph{progressr(v.0.14.0)}, \emph{cli(v.3.6.1)}, \emph{textshaping(v.0.3.7)}, \emph{spatstat.explore(v.3.2-5)}, \emph{labeling(v.0.4.3)}, \emph{spatstat.data(v.3.0-3)}, \emph{ggridges(v.0.5.4)}, \emph{pbapply(v.1.7-2)}, \emph{systemfonts(v.1.0.5)}, \emph{R.utils(v.2.12.2)}, \emph{parallelly(v.1.36.0)}, \emph{rstudioapi(v.0.15.0)}, \emph{RSQLite(v.2.3.3)}, \emph{generics(v.0.1.3)}, \emph{ica(v.1.0-3)}, \emph{spatstat.random(v.3.2-1)}, \emph{Matrix(v.1.6-1.1)}, \emph{ggbeeswarm(v.0.7.2)}, \emph{fansi(v.1.0.5)}, \emph{abind(v.1.4-5)}, \emph{R.methodsS3(v.1.8.2)}, \emph{lifecycle(v.1.0.4)}, \emph{yaml(v.2.3.7)}, \emph{SparseArray(v.1.2.2)}, \emph{BiocFileCache(v.2.10.1)}, \emph{Rtsne(v.0.16)}, \emph{grid(v.4.3.2)}, \emph{blob(v.1.2.4)}, \emph{promises(v.1.2.1)}, \emph{ExperimentHub(v.2.10.0)}, \emph{crayon(v.1.5.2)}, \emph{miniUI(v.0.1.1.1)}, \emph{lattice(v.0.21-9)}, \emph{beachmat(v.2.18.0)}, \emph{cowplot(v.1.1.1)}, \emph{KEGGREST(v.1.42.0)}, \emph{pillar(v.1.9.0)}, \emph{knitr(v.1.45)}, \emph{future.apply(v.1.11.0)}, \emph{codetools(v.0.2-19)}, \emph{leiden(v.0.4.3)}, \emph{glue(v.1.6.2)}, \emph{data.table(v.1.14.8)}, \emph{vctrs(v.0.6.4)}, \emph{png(v.0.1-8)}, \emph{spam(v.2.10-0)}, \emph{gtable(v.0.3.4)}, \emph{cachem(v.1.0.8)}, \emph{xfun(v.0.41)}, \emph{S4Arrays(v.1.2.0)}, \emph{mime(v.0.12)}, \emph{tidygraph(v.1.2.3)}, \emph{survival(v.3.5-7)}, \emph{statmod(v.1.5.0)}, \emph{interactiveDisplayBase(v.1.40.0)}, \emph{ellipsis(v.0.3.2)}, \emph{fitdistrplus(v.1.1-11)}, \emph{ROCR(v.1.0-11)}, \emph{nlme(v.3.1-163)}, \emph{bit64(v.4.0.5)}, \emph{filelock(v.1.0.2)}, \emph{RcppAnnoy(v.0.0.21)}, \emph{irlba(v.2.3.5.1)}, \emph{vipor(v.0.4.5)}, \emph{KernSmooth(v.2.23-22)}, \emph{colorspace(v.2.1-0)}, \emph{DBI(v.1.1.3)}, \emph{ggrastr(v.1.0.2)}, \emph{tidyselect(v.1.2.0)}, \emph{bit(v.4.0.5)}, \emph{compiler(v.4.3.2)}, \emph{curl(v.5.1.0)}, \emph{DelayedArray(v.0.28.0)}, \emph{plotly(v.4.10.3.9000)}, \emph{bookdown(v.0.36)}, \emph{checkmate(v.2.3.0)}, \emph{scales(v.1.2.1)}, \emph{lmtest(v.0.9-40)}, \emph{rappdirs(v.0.3.3)}, \emph{stringr(v.1.5.0)}, \emph{digest(v.0.6.33)}, \emph{goftest(v.1.2-3)}, \emph{spatstat.utils(v.3.0-4)}, \emph{rmarkdown(v.2.25)}, \emph{RhpcBLASctl(v.0.23-42)}, \emph{XVector(v.0.42.0)}, \emph{htmltools(v.0.5.7.9000)}, \emph{pkgconfig(v.2.0.3)}, \emph{sparseMatrixStats(v.1.14.0)}, \emph{highr(v.0.10)}, \emph{dbplyr(v.2.4.0)}, \emph{fastmap(v.1.1.1)}, \emph{rlang(v.1.1.2)}, \emph{htmlwidgets(v.1.6.2)}, \emph{shiny(v.1.7.5.1)}, \emph{DelayedMatrixStats(v.1.24.0)}, \emph{farver(v.2.1.1)}, \emph{zoo(v.1.8-12)}, \emph{jsonlite(v.1.8.7)}, \emph{BiocParallel(v.1.36.0)}, \emph{R.oo(v.1.25.0)}, \emph{BiocSingular(v.1.18.0)}, \emph{RCurl(v.1.98-1.13)}, \emph{magrittr(v.2.0.3)}, \emph{GenomeInfoDbData(v.1.2.11)}, \emph{dotCall64(v.1.1-0)}, \emph{munsell(v.0.5.0)}, \emph{viridis(v.0.6.4)}, \emph{reticulate(v.1.34.0)}, \emph{stringi(v.1.7.12)}, \emph{zlibbioc(v.1.48.0)}, \emph{MASS(v.7.3-60)}, \emph{AnnotationHub(v.3.10.0)}, \emph{plyr(v.1.8.9)}, \emph{parallel(v.4.3.2)}, \emph{listenv(v.0.9.0)}, \emph{ggrepel(v.0.9.4)}, \emph{deldir(v.1.0-9)}, \emph{Biostrings(v.2.70.1)}, \emph{graphlayouts(v.1.0.2)}, \emph{splines(v.4.3.2)}, \emph{tensor(v.1.5)}, \emph{locfit(v.1.5-9.8)}, \emph{igraph(v.1.5.1)}, \emph{spatstat.geom(v.3.2-7)}, \emph{reshape2(v.1.4.4)}, \emph{ScaledMatrix(v.1.10.0)}, \emph{BiocVersion(v.3.18.0)}, \emph{evaluate(v.0.23)}, \emph{BiocManager(v.1.30.22)}, \emph{tweenr(v.2.0.2)}, \emph{httpuv(v.1.6.12)}, \emph{RANN(v.2.6.1)}, \emph{tidyr(v.1.3.0)}, \emph{purrr(v.1.0.2)}, \emph{polyclip(v.1.10-6)}, \emph{future(v.1.33.0)}, \emph{scattermore(v.1.2)}, \emph{ggforce(v.0.4.1)}, \emph{rsvd(v.1.0.5)}, \emph{xtable(v.1.8-4)}, \emph{later(v.1.3.1)}, \emph{viridisLite(v.0.4.2)}, \emph{ragg(v.1.2.6)}, \emph{tibble(v.3.2.1)}, \emph{memoise(v.2.0.1)}, \emph{beeswarm(v.0.4.0)}, \emph{AnnotationDbi(v.1.64.1)}, \emph{cluster(v.2.1.4)} and \emph{globals(v.0.16.2)}
 
   \bibliography{book.bib,packages.bib}
 

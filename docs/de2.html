@@ -199,7 +199,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
 <p>How many copies of each gene are there?</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">kang</span>, <span class="st">'RNA'</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">kang</span>, assay<span class="op">=</span><span class="st">'RNA'</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">total_per_gene</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-56-1.png" width="672"></div>
 <p>Lets keep only those genes with at least 50 copies across the entire experiment.</p>
@@ -209,8 +209,8 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
-<span><span class="co">#&gt; 8710 features across 5000 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (8710 features, 1366 variable features)</span></span>
+<span><span class="co">#&gt; 7216 features across 5000 samples within 1 assay </span></span>
+<span><span class="co">#&gt; Active assay: RNA (7216 features, 1228 variable features)</span></span>
 <span><span class="co">#&gt;  3 layers present: counts, data, scale.data</span></span>
 <span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
 <p>We might like to see the effect of IFN-beta stimulation on each cell type individually. For the purposes of this workshop, just going to test one cell type; CD14+ Monocytes</p>
@@ -249,12 +249,12 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">de_result_wilcox</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 p_val avg_log2FC pct.1 pct.2     p_val_adj</span></span>
-<span><span class="co">#&gt; RSAD2   5.541857e-197   4.928403 0.975 0.043 4.826958e-193</span></span>
-<span><span class="co">#&gt; CXCL10  9.648067e-197   6.963650 0.973 0.038 8.403466e-193</span></span>
-<span><span class="co">#&gt; IFIT3   4.988121e-196   4.736979 0.979 0.050 4.344653e-192</span></span>
-<span><span class="co">#&gt; TNFSF10 1.116418e-195   4.847351 0.977 0.055 9.724004e-192</span></span>
-<span><span class="co">#&gt; IFIT1   8.116699e-190   4.766009 0.950 0.026 7.069645e-186</span></span>
-<span><span class="co">#&gt; ISG15   1.524836e-187   6.143242 0.998 0.320 1.328132e-183</span></span>
+<span><span class="co">#&gt; RSAD2   5.541857e-197   4.928403 0.975 0.043 3.999004e-193</span></span>
+<span><span class="co">#&gt; CXCL10  9.648067e-197   6.963650 0.973 0.038 6.962045e-193</span></span>
+<span><span class="co">#&gt; IFIT3   4.988121e-196   4.736979 0.979 0.050 3.599428e-192</span></span>
+<span><span class="co">#&gt; TNFSF10 1.116418e-195   4.847351 0.977 0.055 8.056075e-192</span></span>
+<span><span class="co">#&gt; IFIT1   8.116699e-190   4.766009 0.950 0.026 5.857010e-186</span></span>
+<span><span class="co">#&gt; ISG15   1.524836e-187   6.143242 0.998 0.320 1.100322e-183</span></span>
 <span><span class="co">#&gt;          AveExpr</span></span>
 <span><span class="co">#&gt; RSAD2   1.686530</span></span>
 <span><span class="co">#&gt; CXCL10  2.388462</span></span>
@@ -392,19 +392,19 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">de_result_pseudobulk</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           logFC   AveExpr        t      P.Value</span></span>
-<span><span class="co">#&gt; ISG20  5.210610 10.304127 33.31799 9.865578e-22</span></span>
-<span><span class="co">#&gt; CXCL11 9.159393  7.253464 33.29300 1.004258e-21</span></span>
-<span><span class="co">#&gt; TMSB10 2.024478 11.459920 31.69678 3.213724e-21</span></span>
-<span><span class="co">#&gt; HERC5  7.055238  5.595289 31.56552 3.545067e-21</span></span>
-<span><span class="co">#&gt; CMPK2  6.834411  5.552654 29.78471 1.396730e-20</span></span>
-<span><span class="co">#&gt; ISG15  6.965645 11.888868 28.02335 5.865512e-20</span></span>
+<span><span class="co">#&gt; ISG20  5.151090 10.311187 34.62460 1.377577e-28</span></span>
+<span><span class="co">#&gt; ISG15  6.926462 11.895928 33.45672 4.402969e-28</span></span>
+<span><span class="co">#&gt; CXCL11 9.051653  7.260525 32.07090 1.838679e-27</span></span>
+<span><span class="co">#&gt; IFIT3  6.980913  8.420719 28.54319 9.234346e-26</span></span>
+<span><span class="co">#&gt; HERC5  6.998957  5.602349 28.68162 7.853707e-26</span></span>
+<span><span class="co">#&gt; TMSB10 1.959063 11.466981 27.48469 3.264041e-25</span></span>
 <span><span class="co">#&gt;           adj.P.Val        B</span></span>
-<span><span class="co">#&gt; ISG20  4.373542e-18 39.85772</span></span>
-<span><span class="co">#&gt; CXCL11 4.373542e-18 38.89788</span></span>
-<span><span class="co">#&gt; TMSB10 7.719383e-18 38.52555</span></span>
-<span><span class="co">#&gt; HERC5  7.719383e-18 37.61623</span></span>
-<span><span class="co">#&gt; CMPK2  2.433104e-17 36.30413</span></span>
-<span><span class="co">#&gt; ISG15  8.514769e-17 35.73098</span></span></code></pre></div>
+<span><span class="co">#&gt; ISG20  9.940598e-25 55.27733</span></span>
+<span><span class="co">#&gt; ISG15  1.588591e-24 54.12183</span></span>
+<span><span class="co">#&gt; CXCL11 4.422636e-24 51.56638</span></span>
+<span><span class="co">#&gt; IFIT3  1.332701e-22 48.32088</span></span>
+<span><span class="co">#&gt; HERC5  1.332701e-22 48.02111</span></span>
+<span><span class="co">#&gt; TMSB10 2.950103e-22 47.34483</span></span></code></pre></div>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">de_result_pseudobulk</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">AveExpr</span>, y<span class="op">=</span><span class="va">logFC</span>, col<span class="op">=</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>

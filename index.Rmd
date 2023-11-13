@@ -50,6 +50,7 @@ System Requirements:
 * SSD storage highly recommended
 
 Install latest versions of:
+
 * R
 * RStudio
 * Seurat
@@ -57,6 +58,8 @@ Install latest versions of:
 * SingleR
 * Celldex
 * Harmony
+
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

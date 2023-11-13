@@ -248,7 +248,7 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 \CommentTok{\#\textgreater{} [1] "/Users/lper0012/Dropbox/BioPlatform/Teaching/Nov2023\_scRNAseq\_workshop"}
 
 \DocumentationTok{\#\# Download and untar the data}
-\FunctionTok{options}\NormalTok{(}\AttributeTok{timeout=}\DecValTok{100}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{timeout=}\DecValTok{200}\NormalTok{)}
 \FunctionTok{download.file}\NormalTok{(}
     \StringTok{"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar"}\NormalTok{,}\StringTok{"data.tar"}\NormalTok{)}
 
@@ -1268,20 +1268,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 12:52:51 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 12:52:51 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 12:52:51 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 12:52:51 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 22:55:30 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 22:55:30 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 22:55:30 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 22:55:30 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 12:52:51 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpCXchUo/file1641f30d3910c}
-\CommentTok{\#\textgreater{} 12:52:51 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 12:52:52 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 12:52:52 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 12:52:52 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 12:52:52 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 12:52:54 Optimization finished}
+\CommentTok{\#\textgreater{} 22:55:31 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpDybmiE/file1a226235c451}
+\CommentTok{\#\textgreater{} 22:55:31 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 22:55:31 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 22:55:31 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 22:55:31 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 22:55:31 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 22:55:33 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2289,7 +2289,7 @@ How many copies of each gene are there?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{total\_per\_gene }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{GetAssayData}\NormalTok{(kang, }\StringTok{\textquotesingle{}RNA\textquotesingle{}}\NormalTok{))}
+\NormalTok{total\_per\_gene }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{GetAssayData}\NormalTok{(kang, }\AttributeTok{assay=}\StringTok{\textquotesingle{}RNA\textquotesingle{}}\NormalTok{, }\AttributeTok{slot=}\StringTok{\textquotesingle{}counts\textquotesingle{}}\NormalTok{))}
 \FunctionTok{hist}\NormalTok{(}\FunctionTok{log10}\NormalTok{(total\_per\_gene))}
 \end{Highlighting}
 \end{Shaded}
@@ -2310,8 +2310,8 @@ How many genes after filtering?
 \begin{Highlighting}[]
 \NormalTok{kang}
 \CommentTok{\#\textgreater{} An object of class Seurat }
-\CommentTok{\#\textgreater{} 8710 features across 5000 samples within 1 assay }
-\CommentTok{\#\textgreater{} Active assay: RNA (8710 features, 1366 variable features)}
+\CommentTok{\#\textgreater{} 7216 features across 5000 samples within 1 assay }
+\CommentTok{\#\textgreater{} Active assay: RNA (7216 features, 1228 variable features)}
 \CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
 \CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
 \end{Highlighting}
@@ -2369,12 +2369,12 @@ Look at the top differentially expressed genes.
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_wilcox)}
 \CommentTok{\#\textgreater{}                 p\_val avg\_log2FC pct.1 pct.2     p\_val\_adj}
-\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   4.928403 0.975 0.043 4.826958e{-}193}
-\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   6.963650 0.973 0.038 8.403466e{-}193}
-\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   4.736979 0.979 0.050 4.344653e{-}192}
-\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   4.847351 0.977 0.055 9.724004e{-}192}
-\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   4.766009 0.950 0.026 7.069645e{-}186}
-\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.143242 0.998 0.320 1.328132e{-}183}
+\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   4.928403 0.975 0.043 3.999004e{-}193}
+\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   6.963650 0.973 0.038 6.962045e{-}193}
+\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   4.736979 0.979 0.050 3.599428e{-}192}
+\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   4.847351 0.977 0.055 8.056075e{-}192}
+\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   4.766009 0.950 0.026 5.857010e{-}186}
+\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.143242 0.998 0.320 1.100322e{-}183}
 \CommentTok{\#\textgreater{}          AveExpr}
 \CommentTok{\#\textgreater{} RSAD2   1.686530}
 \CommentTok{\#\textgreater{} CXCL10  2.388462}
@@ -2546,19 +2546,19 @@ Look at the significantly differentially expressed genes:
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_pseudobulk)}
 \CommentTok{\#\textgreater{}           logFC   AveExpr        t      P.Value}
-\CommentTok{\#\textgreater{} ISG20  5.210610 10.304127 33.31799 9.865578e{-}22}
-\CommentTok{\#\textgreater{} CXCL11 9.159393  7.253464 33.29300 1.004258e{-}21}
-\CommentTok{\#\textgreater{} TMSB10 2.024478 11.459920 31.69678 3.213724e{-}21}
-\CommentTok{\#\textgreater{} HERC5  7.055238  5.595289 31.56552 3.545067e{-}21}
-\CommentTok{\#\textgreater{} CMPK2  6.834411  5.552654 29.78471 1.396730e{-}20}
-\CommentTok{\#\textgreater{} ISG15  6.965645 11.888868 28.02335 5.865512e{-}20}
+\CommentTok{\#\textgreater{} ISG20  5.151090 10.311187 34.62460 1.377577e{-}28}
+\CommentTok{\#\textgreater{} ISG15  6.926462 11.895928 33.45672 4.402969e{-}28}
+\CommentTok{\#\textgreater{} CXCL11 9.051653  7.260525 32.07090 1.838679e{-}27}
+\CommentTok{\#\textgreater{} IFIT3  6.980913  8.420719 28.54319 9.234346e{-}26}
+\CommentTok{\#\textgreater{} HERC5  6.998957  5.602349 28.68162 7.853707e{-}26}
+\CommentTok{\#\textgreater{} TMSB10 1.959063 11.466981 27.48469 3.264041e{-}25}
 \CommentTok{\#\textgreater{}           adj.P.Val        B}
-\CommentTok{\#\textgreater{} ISG20  4.373542e{-}18 39.85772}
-\CommentTok{\#\textgreater{} CXCL11 4.373542e{-}18 38.89788}
-\CommentTok{\#\textgreater{} TMSB10 7.719383e{-}18 38.52555}
-\CommentTok{\#\textgreater{} HERC5  7.719383e{-}18 37.61623}
-\CommentTok{\#\textgreater{} CMPK2  2.433104e{-}17 36.30413}
-\CommentTok{\#\textgreater{} ISG15  8.514769e{-}17 35.73098}
+\CommentTok{\#\textgreater{} ISG20  9.940598e{-}25 55.27733}
+\CommentTok{\#\textgreater{} ISG15  1.588591e{-}24 54.12183}
+\CommentTok{\#\textgreater{} CXCL11 4.422636e{-}24 51.56638}
+\CommentTok{\#\textgreater{} IFIT3  1.332701e{-}22 48.32088}
+\CommentTok{\#\textgreater{} HERC5  1.332701e{-}22 48.02111}
+\CommentTok{\#\textgreater{} TMSB10 2.950103e{-}22 47.34483}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2888,24 +2888,24 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 12:56:02 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 22:57:53 UMAP embedding parameters a = 0.9922 b = 1.112}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 12:56:02 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 12:56:02 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 22:57:53 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 22:57:53 Using Annoy for neighbor search, n\_neighbors = 30}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 12:56:02 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 22:57:53 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 12:56:02 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpCXchUo/file1641f35c22e36}
-\CommentTok{\#\textgreater{} 12:56:02 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 12:56:03 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 12:56:03 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 12:56:04 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 12:56:04 Commencing optimization for 500 epochs, with 210560 positive edges}
-\CommentTok{\#\textgreater{} 12:56:08 Optimization finished}
+\CommentTok{\#\textgreater{} 22:57:53 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpDybmiE/file1a2272a9289c}
+\CommentTok{\#\textgreater{} 22:57:53 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 22:57:54 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 22:57:54 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 22:57:55 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 22:57:55 Commencing optimization for 500 epochs, with 210560 positive edges}
+\CommentTok{\#\textgreater{} 22:57:59 Optimization finished}
 \CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
@@ -2997,6 +2997,8 @@ Useful resources for next steps.
   \href{https://pair-code.github.io/understanding-umap/}{Interactive website explaining UMAP and comparision to t-SNE.}
 \item
   \href{http://bioconductor.org/books/3.14/OSCA.basic/dimensionality-reduction.html\#visualization-interpretation}{OSCA, dimensionality reduction interpretation}
+\item
+  \href{https://logarithmic.net/2023/dimred.html}{A simple description of what PCA and UMAP do, with a 3D example.}
 \end{itemize}
 
 \hypertarget{data-tools-and-visualisation}{%

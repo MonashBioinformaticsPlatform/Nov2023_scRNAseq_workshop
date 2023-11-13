@@ -172,24 +172,24 @@
 <p>We can use <code>harmony</code> the same way we used the <code>pca</code> reduction to compute a UMAP layout or to find clusters.</p>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"harmony"</span>, dims<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, reduction.name<span class="op">=</span><span class="st">"umap_harmony"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 12:51:37 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 22:52:59 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
 <span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
 <span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 12:51:37 Read 5000 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 12:51:37 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 22:52:59 Read 5000 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 22:52:59 Using Annoy for neighbor search, n_neighbors = 30</span></span>
 <span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
 <span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 12:51:37 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 22:52:59 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 12:51:37 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpRy1kyr/file162bf437accbf</span></span>
-<span><span class="co">#&gt; 12:51:37 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 12:51:38 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 12:51:38 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 12:51:39 Initializing from normalized Laplacian + noise (using irlba)</span></span>
-<span><span class="co">#&gt; 12:51:39 Commencing optimization for 500 epochs, with 210560 positive edges</span></span>
-<span><span class="co">#&gt; 12:51:43 Optimization finished</span></span>
+<span><span class="co">#&gt; 22:53:00 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpMOPhod/file1789cf59d10</span></span>
+<span><span class="co">#&gt; 22:53:00 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 22:53:01 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 22:53:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 22:53:02 Initializing from normalized Laplacian + noise (using irlba)</span></span>
+<span><span class="co">#&gt; 22:53:02 Commencing optimization for 500 epochs, with 210560 positive edges</span></span>
+<span><span class="co">#&gt; 22:53:06 Optimization finished</span></span>
 <span><span class="co">#&gt; Warning: Key 'UMAP_' taken, using 'umapharmony_' instead</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"umap_harmony"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>

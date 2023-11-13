@@ -22,6 +22,7 @@ Useful resources for next steps.
 #### Data interpretation
 *	[Interactive website explaining UMAP and comparision to t-SNE.](https://pair-code.github.io/understanding-umap/)
 *	[OSCA, dimensionality reduction interpretation](http://bioconductor.org/books/3.14/OSCA.basic/dimensionality-reduction.html#visualization-interpretation)
+*   [A simple description of what PCA and UMAP do, with a 3D example.](https://logarithmic.net/2023/dimred.html)
 
 #### Data tools and visualisation 
 *	[scTransform Vignette](https://satijalab.org/seurat/articles/sctransform_vignette.html)

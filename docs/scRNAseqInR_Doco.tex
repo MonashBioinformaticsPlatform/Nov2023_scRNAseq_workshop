@@ -151,8 +151,6 @@ Important links:
   \href{../slides}{Slideshow introduction}
 \item
   \href{solutions.html}{Challenge solutions} (no peeking!)
-\item
-  \href{m1-installation.html}{M1 MacOS installation instructions - only use these if you have an M1 Mac}
 \end{itemize}
 
 \hypertarget{recommended-computer-requirements}{%
@@ -211,7 +209,7 @@ Install latest versions of:
 
 For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:
 
-\textbf{IMPORTANT: If you have an M1 Mac - do not follow these instructions, use one of the provided Virtual Machines (VM). Details on how to log on and access the VM will be provided during the workshop.}
+\textbf{IMPORTANT: If you have an M1 Mac - Make sure you have \href{https://mac.r-project.org/tools/}{gfortan}.}
 
 \hypertarget{get-the-workshop-material-and-data}{%
 \section{Get the workshop material and data}\label{get-the-workshop-material-and-data}}
@@ -264,165 +262,6 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
     \StringTok{"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar"}\NormalTok{,}\StringTok{"data.tar"}\NormalTok{)}
 
 \FunctionTok{untar}\NormalTok{(}\StringTok{"data.tar"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{m1-installation}{%
-\chapter{M1 Installation}\label{m1-installation}}
-
-NOTE: \textbf{THESE INSTRUCTIONS ARE ONLY FOR M1 MACS, please use the \href{set-up.html}{installation instructions} if you do not have an M1 Mac. We strongly recommend that you use one of the provided Virtual Machines (VM) and follow these instructions in your own time. Details on how to log on and access the VM will be provided during the workshop.}
-
-How to check if you have an M1 Mac:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Click the \texttt{About\ this\ Mac} in the drop down menu from the top left corner of the screen
-  \includegraphics{images/Select-About-This-Mac-from-Apple-Menu.png}
-\item
-  If the popup displays \texttt{Chip\ Apple\ M1}(see image below) - you have an M1 Mac computer with all its assorted problems with R package installations and you might need the instructions below to troubleshoot installing the packages required for this workshop. However, we strongly recommend using a VM for the workshop and to try these instructions in your own time
-\end{enumerate}
-
-\includegraphics{images/Chip-Section-in-About-This-Mac.png}
-
-Alternatively if you see something like this:
-
-\includegraphics{images/About-This-Mac-Intel.png}
-
-You shouldn't have too much grief getting the packages installed and should follow these \href{set-up.html}{installation instructions.}
-
-\hypertarget{instructions-that-should-work}{%
-\section{Instructions That Should Work}\label{instructions-that-should-work}}
-
-From the installation instructions, the steps below work on R.4.2
-
-\begin{Shaded}
-\begin{Highlighting}[]
-
-\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Seurat"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"remotes"}\NormalTok{, }\StringTok{"R.utils"}\NormalTok{))}
-
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
-\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}SingleR\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}celldex\textquotesingle{}}\NormalTok{,}
-                       \StringTok{\textquotesingle{}BiocGenerics\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}DelayedArray\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}DelayedMatrixStats\textquotesingle{}}\NormalTok{,}
-                       \StringTok{\textquotesingle{}limma\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}S4Vectors\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}SingleCellExperiment\textquotesingle{}}\NormalTok{,}
-                       \StringTok{\textquotesingle{}SummarizedExperiment\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}batchelor\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Matrix.utils\textquotesingle{}}\NormalTok{),}
-                     \AttributeTok{update=}\ConstantTok{FALSE}\NormalTok{)}
-
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"plotly/plotly.R"}\NormalTok{)}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"pfh/langevitour"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{instructions-that-will-fail}{%
-\section{Instructions That Will Fail}\label{instructions-that-will-fail}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"RcppArmadillo"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.11.2.4.0"}\NormalTok{)}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.1"}\NormalTok{, }\AttributeTok{upgrade=}\StringTok{"never"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{troubleshooting-installation-on-m1-mac-with-r.4.2}{%
-\section{Troubleshooting installation on M1 Mac with R.4.2:}\label{troubleshooting-installation-on-m1-mac-with-r.4.2}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Do not install any packages from source - select \texttt{no} when asked. Try to install and see if the packages will loads
-\item
-  Seurat installation fails and needs additional packages to install to load Seurat:
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"rgeos"}\NormalTok{, }\StringTok{"spatstat.core"}\NormalTok{, }\StringTok{"RcppEigen"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Harmony will not install and returns an error that looks like something like this:
-\end{enumerate}
-
-\begin{verbatim}
-ld: warning: directory not found for option '-L/opt/R/arm64/gfortran/lib/gcc/aarch64-apple-darwin20.6.0/12.0.1'
-ld: library not found for -lemutls_w
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [harmony.so] Error 1
-ERROR: compilation failed for package ‘harmony’
-* removing ‘/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/harmony’
-Warning message:
-In i.p(...) :
-  installation of package ‘/var/folders/1k/bbv_y78s4zj0m29mb6fwj3km69dgdb/T//Rtmp9jOOMQ/file83ee3a886f7c/harmony_0.1.1.tar.gz’ had non-zero exit status
-\end{verbatim}
-
-OR:
-
-\begin{verbatim}
-1 warning and 1 error generated.
-make: *** [harmony.o] Error 1
-ERROR: compilation failed for package ‘harmony’
-* removing ‘/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library/harmony’
-Warning message:
-In i.p(...) :
-  installation of package ‘/var/folders/1k/bbv_y78s4zj0m29mb6fwj3km69dgdb/T//Rtmpl9BbIi/remotes15d0d7fc6b490/harmony’ had non-zero exit status
-\end{verbatim}
-
-Solution: install \href{https://mac.r-project.org/tools/}{GNU Fortran compiler}. Following the instructions for that link in regards to Apple Silicon Macs (M1 and above):
-
-\begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
-\tightlist
-\item
-  Download the experimental branch of GNU Fortran (run the code below in your terminal)
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{wget}\NormalTok{ https://mac.r{-}project.org/tools/gfortran{-}12.0.1{-}20220312{-}is{-}darwin20{-}arm64.tar.xz}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  This binary unpacks into /opt/R/arm64/gfortran plus a symbolic link in /opt/R/arm64/bin/gfortran. To unpack use:
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{tar}\NormalTok{ fxz gfortran{-}12.0.1{-}20220312{-}is{-}darwin20{-}arm64.tar.xz }\AttributeTok{{-}C}\NormalTok{ /}
-\end{Highlighting}
-\end{Shaded}
-
-If this fails because you do not have permission, run it with sudo as so:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{sudo}\NormalTok{ tar fxz gfortran{-}12.0.1{-}20220312{-}is{-}darwin20{-}arm64.tar.xz }\AttributeTok{{-}C}\NormalTok{ /}
-\end{Highlighting}
-\end{Shaded}
-
-It will ask for a password - this should be the same password as your user account.
-
-\begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Now attempt to install harmony:
-\end{enumerate}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"RcppArmadillo"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.11.2.4.0"}\NormalTok{)}
-\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_version}\NormalTok{(}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{version=}\StringTok{"0.1"}\NormalTok{, }\AttributeTok{upgrade=}\StringTok{"never"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -912,7 +751,7 @@ Lets look at the number of features (genes) to the percent mitochondrial genes p
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 you can check different thresholds of mito percentage
 
@@ -1279,20 +1118,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 01:18:17 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 01:18:17 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 01:18:17 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 01:18:17 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 12:08:01 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 12:08:01 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 12:08:01 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:08:01 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 01:18:17 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmphqfs32/file3668725a8775}
-\CommentTok{\#\textgreater{} 01:18:17 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 01:18:17 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 01:18:17 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 01:18:18 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 01:18:18 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 01:18:20 Optimization finished}
+\CommentTok{\#\textgreater{} 12:08:01 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmps2mQNs/file6dd34044ab5e}
+\CommentTok{\#\textgreater{} 12:08:01 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 12:08:02 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 12:08:02 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:08:02 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 12:08:02 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 12:08:04 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1383,7 +1222,7 @@ Check out the clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-23-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1635,7 +1474,7 @@ Plot a clustree to decide how many clusters you have and what resolution capture
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-25-1.pdf}
 
 Name cells with the corresponding cluster name at the resolution you pick. This case we are happy with 0.5.
 
@@ -1654,7 +1493,7 @@ Plot the UMAP with colored clusters with Dimplot
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 \hypertarget{clustermarkers}{%
 \chapter{Cluster Markers}\label{clustermarkers}}
@@ -1755,7 +1594,7 @@ We include several tools for visualizing marker expression. \texttt{VlnPlot()} (
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1764,7 +1603,7 @@ We include several tools for visualizing marker expression. \texttt{VlnPlot()} (
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-37-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-29-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1903,7 +1742,7 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 DotPlots
 
@@ -1913,7 +1752,7 @@ DotPlots
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-39-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \texttt{DoHeatmap()} generates an expression heatmap for given cells and features. In this case, we are plotting the top 10 markers (or all markers if less than 10) for each cluster.
 
@@ -1965,7 +1804,7 @@ If you know markers for your cell types, use AddModuleScore to label them.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \hypertarget{assigning-cell-type-identity-to-clusters}{%
 \section{Assigning cell type identity to clusters}\label{assigning-cell-type-identity-to-clusters}}
@@ -2136,7 +1975,7 @@ Keep any types that have more than 10 cells to the label, and put those labels b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-41-1.pdf}
 
 It is nice to see that even though SingleR does not use the clusters we computed earlier, the labels do seem to match those clusters reasonably well.
 
@@ -2305,7 +2144,7 @@ How many copies of each gene are there?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-48-1.pdf}
 
 Lets keep only those genes with at least 50 copies across the entire experiment.
 
@@ -2340,7 +2179,7 @@ An easy way is to subset the object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-51-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2349,7 +2188,7 @@ An easy way is to subset the object.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-59-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-51-2.pdf}
 
 \hypertarget{default-wilcox-test}{%
 \section{Default Wilcox test}\label{default-wilcox-test}}
@@ -2415,7 +2254,7 @@ Look at the top differentially expressed genes.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 \hypertarget{seurat-negative-binomial}{%
 \section{Seurat Negative binomial}\label{seurat-negative-binomial}}
@@ -2476,7 +2315,7 @@ Look at the top differentially expressed genes.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 \hypertarget{pseudobulk}{%
 \section{Pseudobulk}\label{pseudobulk}}
@@ -2592,7 +2431,7 @@ Look at the significantly differentially expressed genes:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-69-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 \hypertarget{discussion}{%
 \subsubsection*{Discussion}\label{discussion}}
@@ -2747,7 +2586,7 @@ We can then check the cell phase on the UMAP. In this dataset, phase isn't drivi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-72-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 Where a bias \emph{is} present, your course of action depends on the task at hand. It might involve `regressing out' the cell cycle variation when scaling data \texttt{ScaleData(kang,\ vars.to.regress="Phase")}, omitting cell-cycle dominated clusters, or just accounting for it in your differential expression calculations.
 
@@ -2814,7 +2653,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2822,7 +2661,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-67-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2847,7 +2686,7 @@ The data has already been processed as we have done with the first PBMC dataset,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-75-3.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-67-3.pdf}
 
 There is a big difference between unstimulated and stimulated cells. This has split cells of the same type into pairs of clusters. If the difference was simply uniform, we could regress it out (e.g.~using \texttt{ScaleData(...,\ vars.to.regress="stim")}). However, as can be seen in the PCA plot, the difference is not uniform and we need to do something cleverer.
 
@@ -2884,7 +2723,7 @@ This has added a new set of reduced dimensions to the Seurat object, \texttt{kan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-77-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-69-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2892,38 +2731,38 @@ This has added a new set of reduced dimensions to the Seurat object, \texttt{kan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-77-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-69-2.pdf}
 
 We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to compute a UMAP layout or to find clusters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 01:20:37 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 12:10:25 UMAP embedding parameters a = 0.9922 b = 1.112}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 01:20:37 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 01:20:37 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:10:25 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 12:10:25 Using Annoy for neighbor search, n\_neighbors = 30}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 01:20:37 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 12:10:25 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 01:20:38 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmphqfs32/file366851e347be}
-\CommentTok{\#\textgreater{} 01:20:38 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 01:20:39 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 01:20:39 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 01:20:40 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 01:20:40 Commencing optimization for 500 epochs, with 210560 positive edges}
-\CommentTok{\#\textgreater{} 01:20:44 Optimization finished}
+\CommentTok{\#\textgreater{} 12:10:26 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmps2mQNs/file6dd37c606652}
+\CommentTok{\#\textgreater{} 12:10:26 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 12:10:27 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 12:10:27 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 12:10:28 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 12:10:28 Commencing optimization for 500 epochs, with 210560 positive edges}
+\CommentTok{\#\textgreater{} 12:10:32 Optimization finished}
 \CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-70-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2947,7 +2786,7 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-2.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-70-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2955,7 +2794,7 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-78-3.pdf}
+\includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-70-3.pdf}
 
 Having found a good set of clusters, we would usually perform differential expression analysis on the original data and include batches/runs/individuals as predictors in the linear model. In this example we could now compare un-stimulated and stimulated cells within each cluster. A particularly nice statistical approach that is possible here would be to convert the counts to pseudo-bulk data for the eight individuals, and then apply a bulk RNA-Seq differential expression analysis method. However there is still the problem that unstimulated and stimulated cells were processed in separate batches.
 

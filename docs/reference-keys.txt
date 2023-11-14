@@ -5,10 +5,6 @@ set-up
 get-the-workshop-material-and-data
 package-installation
 raw-data
-m1-installation
-instructions-that-should-work
-instructions-that-will-fail
-troubleshooting-installation-on-m1-mac-with-r.4.2
 schedule
 structure
 load-an-existing-seurat-object

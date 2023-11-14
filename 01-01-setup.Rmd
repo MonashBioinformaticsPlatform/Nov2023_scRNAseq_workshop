@@ -2,7 +2,7 @@
 
 For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:
 
-**IMPORTANT: If you have an M1 Mac - do not follow these instructions, use one of the provided Virtual Machines (VM). Details on how to log on and access the VM will be provided during the workshop.**
+**IMPORTANT: If you have an M1 Mac - Make sure you have [gfortan](https://mac.r-project.org/tools/).**
 
 ## Get the workshop material and data
 

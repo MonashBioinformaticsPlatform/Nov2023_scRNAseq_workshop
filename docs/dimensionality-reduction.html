@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Dimensionality reduction | scRNAseq Analysis in R with Seurat</title>
+<meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
 <meta name="description" content="Why do we need to do this? Imagine each gene represents a dimension - or an axis on a plot. We could plot the expression of two genes with a simple scatterplot. But a genome has thousands of genes...">
 <meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Dimensionality reduction | scRNAseq Analysis in R with Seurat">
@@ -190,20 +191,20 @@
 <span><span class="co">#&gt; Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric</span></span>
 <span><span class="co">#&gt; To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'</span></span>
 <span><span class="co">#&gt; This message will be shown once per session</span></span>
-<span><span class="co">#&gt; 12:04:55 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
-<span><span class="co">#&gt; 12:04:55 Read 2638 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 12:04:55 Using Annoy for neighbor search, n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 12:04:55 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 13:56:50 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 13:56:50 Read 2638 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 13:56:50 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 13:56:50 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 12:04:55 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpfiWc6D/file6c6f6fde9dc2</span></span>
-<span><span class="co">#&gt; 12:04:55 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 12:04:56 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 12:04:56 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 12:04:56 Initializing from normalized Laplacian + noise (using irlba)</span></span>
-<span><span class="co">#&gt; 12:04:56 Commencing optimization for 500 epochs, with 105140 positive edges</span></span>
-<span><span class="co">#&gt; 12:04:58 Optimization finished</span></span></code></pre></div>
+<span><span class="co">#&gt; 13:56:50 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//Rtmps41uiq/file9b33265c59a6</span></span>
+<span><span class="co">#&gt; 13:56:50 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 13:56:50 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 13:56:50 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 13:56:51 Initializing from normalized Laplacian + noise (using irlba)</span></span>
+<span><span class="co">#&gt; 13:56:51 Commencing optimization for 500 epochs, with 105140 positive edges</span></span>
+<span><span class="co">#&gt; 13:56:53 Optimization finished</span></span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +257,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by . It was last built on Compiled: November 14, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 14, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

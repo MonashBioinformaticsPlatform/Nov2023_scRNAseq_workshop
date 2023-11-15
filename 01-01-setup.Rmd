@@ -20,15 +20,16 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 
 ```{r eval=FALSE}
 ## Install required packages for Seurat:
-install.packages(c("Seurat", "dplyr", "remotes", "R.utils"))
+install.packages(c("Seurat", "dplyr", "remotes", "R.utils","harmony"))
 
 ## Install required Bioconductor packages
 install.packages("BiocManager")
 BiocManager::install(c('SingleR', 'celldex',
                        'BiocGenerics', 'DelayedArray', 'DelayedMatrixStats',
                        'limma', 'S4Vectors', 'SingleCellExperiment',
-                       'SummarizedExperiment' ),
+                       'SummarizedExperiment','edgeR' ),
                      update=FALSE)
+
 
 ## install clustree
 install.packages("clustree")
@@ -43,7 +44,7 @@ install.packages("RColorBrewer")
 getwd()
 
 ## Download and untar the data
-options(timeout=200)
+options(timeout=3600)
 download.file(
     "https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar","data.tar")
 

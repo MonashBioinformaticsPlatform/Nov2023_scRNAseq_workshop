@@ -11,6 +11,26 @@ But before that - what does a Seurat object look like, and what can we do with i
 Lets have a look at a Seurat object that's already setup. 
 
 
+## Load an existing Seurat object
+
+The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
+
+This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports [here](https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
+
+
+First, load Seurat package.
+```{r libloader, results='hide', message=FALSE, warning=FALSE} 
+library(Seurat)
+```
+
+
+And here's the one we prepared earlier. Seurat objects are usually saved as '.rds' files, which is an R format for storing binary data (not-text or human-readable). The functions `readRDS()` can load it.
+
+```{r}
+pbmc_processed <- readRDS("data/pbmc_tutorial.rds")
+pbmc_processed
+```
+
 #### Discussion: The Seurat Object in R { - .rational}
 
 Lets take a look at the seurat object we have just created in R, `pbmc_processed`
@@ -73,25 +93,6 @@ Where is our count data within the Seurat object?
 
 
 
-## Load an existing Seurat object
-
-The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
-
-This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports [here](https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
-
-
-First, load Seurat package.
-```{r libloader, results='hide', message=FALSE, warning=FALSE} 
-library(Seurat)
-```
-
-
-And here's the one we prepared earlier. Seurat objects are usually saved as '.rds' files, which is an R format for storing binary data (not-text or human-readable). The functions `readRDS()` can load it.
-
-```{r}
-pbmc_processed <- readRDS("data/pbmc_tutorial.rds")
-pbmc_processed
-```
 
 
 ## What's in there?

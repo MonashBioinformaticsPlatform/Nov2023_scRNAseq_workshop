@@ -1,22 +1,30 @@
 # Schedule {#schedule}
+
 | Time      | Content               |
 | :---:|  :----: | 
-|10:00|		Getting started |
-|	|	Welcome and Housekeeping |
-| |	Background on ScRNAseq + R tools|
-| | Seurat Object |
-| |Load data |
-|11:50|	00:10  Break|
-||	QC filtering|
-||Normalisation|
-|13:05|	Lunch Break|
-|| PCAs and UMAPs|
-||	Clustering|
-|15:45	|00:10	Break|
-||	Cluster markers|
-||SingleR|
+|10:00	|	Zoom opened for participants|
+||	Welcome and Housekeeping|
+||	Background on ScRNAseq + R tools|
+||	Seurat Object|
+|11:15|	00:15	Breakout activity| 
+| |	Load data|
+|11:50|	00:10	Break|
+||	QC filtering
+|12:25|	00:10	Breakout activity|
+||	QC filtering continued
+|12:45|	00:10	Breakout activity|
+||	Normalisation|
+||	Lunch Break|
+||	PCAs and UMAPs|
+|14:50|	00:15	Breakout activity|
+|	|Clustering|
+|15:30|	00:15	Breakout activity|
+|15:45|	00:10	Break|
+||	Cluster Markers|
+|	|	SingleR|
 |16:25|	00:10	Break|
-||Differential Expression
+||Differential Expression|
+||	Main room Discussion on differential expression|
 |17:00|Final remarks and conclusion|
 
 

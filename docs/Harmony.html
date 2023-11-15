@@ -69,7 +69,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -172,24 +172,24 @@
 <p>We can use <code>harmony</code> the same way we used the <code>pca</code> reduction to compute a UMAP layout or to find clusters.</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"harmony"</span>, dims<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, reduction.name<span class="op">=</span><span class="st">"umap_harmony"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 13:59:05 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 01:08:44 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
 <span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
 <span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 13:59:05 Read 5000 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 13:59:05 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 01:08:44 Read 5000 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 01:08:44 Using Annoy for neighbor search, n_neighbors = 30</span></span>
 <span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
 <span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 13:59:05 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 01:08:44 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 13:59:06 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//Rtmps41uiq/file9b336e670c68</span></span>
-<span><span class="co">#&gt; 13:59:06 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 13:59:07 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 13:59:07 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 13:59:08 Initializing from normalized Laplacian + noise (using irlba)</span></span>
-<span><span class="co">#&gt; 13:59:08 Commencing optimization for 500 epochs, with 210560 positive edges</span></span>
-<span><span class="co">#&gt; 13:59:12 Optimization finished</span></span>
+<span><span class="co">#&gt; 01:08:44 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpT5CWYd/file182f140486de4</span></span>
+<span><span class="co">#&gt; 01:08:44 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 01:08:45 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 01:08:46 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 01:08:46 Initializing from normalized Laplacian + noise (using irlba)</span></span>
+<span><span class="co">#&gt; 01:08:46 Commencing optimization for 500 epochs, with 210560 positive edges</span></span>
+<span><span class="co">#&gt; 01:08:50 Optimization finished</span></span>
 <span><span class="co">#&gt; Warning: Key 'UMAP_' taken, using 'umapharmony_' instead</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"umap_harmony"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>
@@ -237,8 +237,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/04-12-Harmony.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/04-12-Harmony.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/blob/master/04-12-Harmony.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/edit/master/04-12-Harmony.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -250,7 +250,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 14, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 16, 2023.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

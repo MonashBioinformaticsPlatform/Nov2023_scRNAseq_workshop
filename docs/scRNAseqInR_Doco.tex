@@ -120,7 +120,7 @@
 
 \title{scRNAseq Analysis in R with Seurat}
 \author{Monash Genomics and Bioinformatics Platform (MGBP)}
-\date{Compiled: November 14, 2023}
+\date{Compiled: November 16, 2023}
 
 \begin{document}
 \maketitle
@@ -276,22 +276,29 @@ Time & Content \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-10:00 & Getting started \\
+10:00 & Zoom opened for participants \\
 & Welcome and Housekeeping \\
 & Background on ScRNAseq + R tools \\
 & Seurat Object \\
+11:15 & 00:15 Breakout activity \\
 & Load data \\
 11:50 & 00:10 Break \\
 & QC filtering \\
+12:25 & 00:10 Breakout activity \\
+& QC filtering continued \\
+12:45 & 00:10 Breakout activity \\
 & Normalisation \\
-13:05 & Lunch Break \\
+& Lunch Break \\
 & PCAs and UMAPs \\
+14:50 & 00:15 Breakout activity \\
 & Clustering \\
+15:30 & 00:15 Breakout activity \\
 15:45 & 00:10 Break \\
-& Cluster markers \\
+& Cluster Markers \\
 & SingleR \\
 16:25 & 00:10 Break \\
 & Differential Expression \\
+& Main room Discussion on differential expression \\
 17:00 & Final remarks and conclusion \\
 \end{longtable}
 
@@ -307,6 +314,35 @@ We'll load raw counts data, do some QC and setup various useful information in a
 But before that - what does a Seurat object look like, and what can we do with it once we've made one?
 
 Lets have a look at a Seurat object that's already setup.
+
+\hypertarget{load-an-existing-seurat-object}{%
+\section{Load an existing Seurat object}\label{load-an-existing-seurat-object}}
+
+The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
+
+This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports \href{https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0}{here}.
+
+First, load Seurat package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Seurat)}
+\end{Highlighting}
+\end{Shaded}
+
+And here's the one we prepared earlier. Seurat objects are usually saved as `.rds' files, which is an R format for storing binary data (not-text or human-readable). The functions \texttt{readRDS()} can load it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pbmc\_processed }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/pbmc\_tutorial.rds"}\NormalTok{)}
+\NormalTok{pbmc\_processed}
+\CommentTok{\#\textgreater{} An object of class Seurat }
+\CommentTok{\#\textgreater{} 13714 features across 2700 samples within 1 assay }
+\CommentTok{\#\textgreater{} Active assay: RNA (13714 features, 2000 variable features)}
+\CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
+\CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{discussion-the-seurat-object-in-r}{%
 \subsubsection*{Discussion: The Seurat Object in R}\label{discussion-the-seurat-object-in-r}}
@@ -365,35 +401,6 @@ Use \texttt{str} to look at the structure of the Seurat object \texttt{pbmc\_pro
 What is in the \texttt{meta.data} slot within your Seurat object currently? What type of data is contained here?
 
 Where is our count data within the Seurat object?
-
-\hypertarget{load-an-existing-seurat-object}{%
-\section{Load an existing Seurat object}\label{load-an-existing-seurat-object}}
-
-The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
-
-This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports \href{https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0}{here}.
-
-First, load Seurat package.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(Seurat)}
-\end{Highlighting}
-\end{Shaded}
-
-And here's the one we prepared earlier. Seurat objects are usually saved as `.rds' files, which is an R format for storing binary data (not-text or human-readable). The functions \texttt{readRDS()} can load it.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{pbmc\_processed }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/pbmc\_tutorial.rds"}\NormalTok{)}
-\NormalTok{pbmc\_processed}
-\CommentTok{\#\textgreater{} An object of class Seurat }
-\CommentTok{\#\textgreater{} 13714 features across 2700 samples within 1 assay }
-\CommentTok{\#\textgreater{} Active assay: RNA (13714 features, 2000 variable features)}
-\CommentTok{\#\textgreater{}  3 layers present: counts, data, scale.data}
-\CommentTok{\#\textgreater{}  2 dimensional reductions calculated: pca, umap}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{whats-in-there}{%
 \section{What's in there?}\label{whats-in-there}}
@@ -1119,20 +1126,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 13:59:58 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 13:59:58 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 13:59:58 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 13:59:58 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 01:11:10 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 01:11:10 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 01:11:10 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 01:11:10 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 13:59:59 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmp1ezaWV/file9cb436676450}
-\CommentTok{\#\textgreater{} 13:59:59 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 13:59:59 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 13:59:59 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 13:59:59 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 13:59:59 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 14:00:01 Optimization finished}
+\CommentTok{\#\textgreater{} 01:11:11 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpwlWBNj/file1855334d9320}
+\CommentTok{\#\textgreater{} 01:11:11 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 01:11:11 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 01:11:11 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 01:11:11 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 01:11:11 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 01:11:13 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2739,24 +2746,24 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 14:02:22 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 01:13:34 UMAP embedding parameters a = 0.9922 b = 1.112}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 14:02:22 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 14:02:22 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 01:13:34 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 01:13:34 Using Annoy for neighbor search, n\_neighbors = 30}
 \CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
 \CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 14:02:22 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 01:13:34 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 14:02:22 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmp1ezaWV/file9cb45255e46f}
-\CommentTok{\#\textgreater{} 14:02:22 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 14:02:23 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 14:02:24 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 14:02:25 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 14:02:25 Commencing optimization for 500 epochs, with 210560 positive edges}
-\CommentTok{\#\textgreater{} 14:02:29 Optimization finished}
+\CommentTok{\#\textgreater{} 01:13:34 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpwlWBNj/file1855312a967ec}
+\CommentTok{\#\textgreater{} 01:13:34 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 01:13:35 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 01:13:36 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 01:13:36 Initializing from normalized Laplacian + noise (using irlba)}
+\CommentTok{\#\textgreater{} 01:13:36 Commencing optimization for 500 epochs, with 210560 positive edges}
+\CommentTok{\#\textgreater{} 01:13:40 Optimization finished}
 \CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
